@@ -13,6 +13,7 @@ from mcnexus.rcon import (
     RCONConnectionError,
     RCONTimeoutError
 )
+from mcnexus.status import status, status_bulk, StatusResponse
 
 __version__ = "0.1.0"
 
@@ -21,6 +22,9 @@ __all__ = [
     "RCONPool",
     "RCONWatcher",
     "RCONResponse",
+    "status",
+    "status_bulk",
+    "StatusResponse",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
