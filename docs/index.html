@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mcnexus Docs | Enterprise Minecraft Library</title>
+    <title>mcnexus Documentation | Full API Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,18 +19,7 @@
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            50: '#f2f9f2',
-                            100: '#e1f2e1',
-                            200: '#c5e6c5',
-                            300: '#9ad29a',
-                            400: '#68b468',
-                            500: '#4caf50',
-                            600: '#388e3c',
-                            700: '#2e7d32',
-                            800: '#1b5e20',
-                            900: '#164d1a',
-                        },
+                        brand: { 500: '#4caf50', 600: '#388e3c' },
                         dark: '#09090b',
                         surface: '#121214',
                     }
@@ -40,260 +29,258 @@
     </script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        pre[class*="language-"] {
-            margin: 0 !important;
-            background: #18181b !important;
-            font-size: 0.875rem !important;
-            line-height: 1.7 !important;
-        }
-        .sidebar-item {
-            @apply flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200;
-        }
-        .sidebar-active {
-            @apply bg-brand-500/10 text-brand-500 border-r-2 border-brand-500;
-        }
-        .glass {
-            background: rgba(18, 18, 20, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .table-row {
-            @apply border-b border-white/5 hover:bg-white/[0.02] transition-colors;
-        }
+        pre[class*="language-"] { margin: 0 !important; background: #18181b !important; font-size: 0.875rem !important; }
+        .sidebar-link { @apply block px-3 py-2 text-sm text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all; }
+        .sidebar-link.active { @apply text-brand-50 text-brand-500 bg-brand-500/10; }
+        .table-cell { @apply py-4 px-4 text-sm border-b border-white/5; }
+        .endpoint-badge { @apply text-[10px] font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 uppercase tracking-wider; }
     </style>
 </head>
-<body class="bg-dark text-zinc-400 selection:bg-brand-500/30 selection:text-brand-200">
+<body class="bg-dark text-zinc-400">
     
-    <!-- Top Navigation -->
-    <nav class="fixed top-0 z-50 w-full glass">
+    <!-- Top Nav -->
+    <nav class="fixed top-0 z-50 w-full bg-dark/80 backdrop-blur-md border-b border-white/5">
         <div class="px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <span class="text-xl font-bold tracking-tighter text-white flex items-center gap-2">
-                    <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center shadow-lg shadow-brand-500/20">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    mcnexus <span class="text-xs font-mono text-zinc-500 ml-1">v1.x</span>
-                </span>
-            </div>
-            <div class="flex items-center gap-6">
-                <div class="hidden md:flex items-center gap-6 text-sm font-medium">
-                    <a href="https://github.com/Bogdan11212/mcnexus" class="text-zinc-400 hover:text-white transition">GitHub</a>
-                    <a href="#" class="text-zinc-400 hover:text-white transition">Community</a>
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-brand-500 rounded flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-                <button class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-brand-500/20">
-                    Sponsor Project
-                </button>
+                <span class="text-lg font-bold text-white tracking-tight">mcnexus <span class="text-zinc-600 font-mono text-xs">v1.x</span></span>
             </div>
+            <a href="https://github.com/Bogdan11212/mcnexus" class="text-sm font-medium hover:text-white transition">GitHub Repository</a>
         </div>
     </nav>
 
-    <div class="flex pt-20">
-        <!-- Main Sidebar -->
-        <aside class="fixed left-0 w-72 h-[calc(100vh-5rem)] overflow-y-auto border-r border-white/5 p-6 hidden lg:block bg-dark">
-            <div class="space-y-8">
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4 px-3">Getting Started</h3>
-                    <div class="space-y-1">
-                        <a href="#intro" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Introduction</a>
-                        <a href="#install" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Quick Install</a>
-                        <a href="#why" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Why mcnexus?</a>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4 px-3">RCON Core</h3>
-                    <div class="space-y-1">
-                        <a href="#rcon-basics" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Base Client</a>
-                        <a href="#rcon-pool" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Pool Management</a>
-                        <a href="#rcon-watcher" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Event Watcher</a>
-                        <a href="#rcon-errors" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Error Handling</a>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4 px-3">Server Status</h3>
-                    <div class="space-y-1">
-                        <a href="#status-simple" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Simple Query</a>
-                        <a href="#status-bulk" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Bulk Scanning</a>
-                        <a href="#status-srv" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">DNS & SRV Logic</a>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4 px-3">Protocols</h3>
-                    <div class="space-y-1">
-                        <a href="#slp-modern" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Modern SLP</a>
-                        <a href="#slp-legacy" class="sidebar-item text-zinc-400 hover:text-white hover:bg-white/5">Legacy SLP</a>
-                    </div>
-                </div>
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside class="fixed left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r border-white/5 p-6 hidden lg:block bg-dark">
+            <div class="space-y-6">
+                <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Getting Started</h3>
+                    <nav class="space-y-1">
+                        <a href="#intro" class="sidebar-link">Introduction</a>
+                        <a href="#install" class="sidebar-link">Installation</a>
+                    </nav>
+                </section>
+                <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">RCON Core</h3>
+                    <nav class="space-y-1">
+                        <a href="#rcon-client" class="sidebar-link">RCONClient</a>
+                        <a href="#rcon-response" class="sidebar-link">RCONResponse</a>
+                        <a href="#rcon-pool" class="sidebar-link">RCONPool</a>
+                        <a href="#rcon-watcher" class="sidebar-link">RCONWatcher</a>
+                        <a href="#rcon-exceptions" class="sidebar-link">Exceptions</a>
+                    </nav>
+                </section>
+                <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Server Status</h3>
+                    <nav class="space-y-1">
+                        <a href="#status-query" class="sidebar-link">Status Query</a>
+                        <a href="#status-bulk" class="sidebar-link">Bulk Scanning</a>
+                        <a href="#status-response" class="sidebar-link">StatusResponse</a>
+                    </nav>
+                </section>
+                <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Utilities</h3>
+                    <nav class="space-y-1">
+                        <a href="#utils-colors" class="sidebar-link">Color Stripping</a>
+                    </nav>
+                </section>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 lg:ml-72 px-8 lg:px-16 py-12 max-w-6xl">
+        <!-- Content -->
+        <main class="flex-1 lg:ml-64 px-8 lg:px-12 py-12 max-w-5xl">
             
-            <!-- Hero Section -->
-            <section id="intro" class="mb-24">
-                <div class="inline-block px-3 py-1 bg-brand-500/10 text-brand-500 rounded-full text-xs font-bold mb-6 border border-brand-500/20">
-                    DOCUMENTATION HUB
-                </div>
-                <h1 class="text-6xl font-extrabold text-white tracking-tight mb-8">
-                    The ultimate toolkit for <br><span class="text-brand-500">Minecraft Servers.</span>
-                </h1>
-                <p class="text-xl leading-relaxed text-zinc-400 max-w-3xl">
-                    mcnexus is a production-grade Python library designed for developers who need extreme reliability. 
-                    Whether you are managing a single server or a network of thousands, we provide the tools to make it happen.
+            <!-- Introduction -->
+            <section id="intro" class="mb-20">
+                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-6">Introduction</h1>
+                <p class="text-lg leading-relaxed text-zinc-400">
+                    mcnexus is an asynchronous, high-performance Python library for Minecraft server management. 
+                    It provides low-level protocol implementations wrapped in a developer-friendly API.
                 </p>
             </section>
 
-            <!-- Install -->
-            <section id="install" class="mb-24">
-                <h2 class="text-3xl font-bold text-white mb-8">Quick Installation</h2>
-                <p class="mb-6">Install the latest version directly from GitHub. mcnexus requires <span class="text-brand-400 font-mono">Python 3.8+</span> and <span class="text-brand-400 font-mono">AsyncIO</span>.</p>
-                <div class="rounded-xl overflow-hidden border border-white/5 shadow-2xl bg-zinc-900">
-                    <div class="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-white/5">
-                        <span class="text-xs font-mono text-zinc-500">bash</span>
-                        <button class="text-xs hover:text-white transition">Copy</button>
-                    </div>
-                    <pre><code class="language-bash">pip install git+https://github.com/Bogdan11212/mcnexus.git</code></pre>
-                </div>
+            <!-- Installation -->
+            <section id="install" class="mb-20">
+                <h2 class="text-2xl font-bold text-white mb-6">Installation</h2>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-bash">pip install git+https://github.com/Bogdan11212/mcnexus.git</code></pre>
             </section>
 
-            <!-- RCON Section -->
-            <section id="rcon-basics" class="mb-24">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                    <h2 class="text-4xl font-bold text-white">RCON Core</h2>
+            <!-- RCON Client -->
+            <section id="rcon-client" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">RCONClient</h2>
                 </div>
+                <p class="mb-6">The primary class for executing commands on a single server. Features automatic synchronization and re-connection.</p>
                 
-                <p class="text-lg text-zinc-400 mb-8 leading-relaxed">
-                    Minecraft's RCON implementation is notoriously buggy, especially with long responses. 
-                    mcnexus solves this by implementing a unique <strong>Synchronization Marker</strong> technique.
-                </p>
+                <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Methods</h4>
+                <div class="space-y-8">
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">async command(cmd: str) -> RCONResponse</code>
+                        <p class="text-sm mt-2 text-zinc-500">Sends a command to the server. Handles multi-packet responses automatically.</p>
+                    </div>
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">async connect()</code>
+                        <p class="text-sm mt-2 text-zinc-500">Establishes connection and authenticates. Not needed if using <code class="bg-zinc-800 px-1 rounded">async with</code>.</p>
+                    </div>
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">async disconnect()</code>
+                        <p class="text-sm mt-2 text-zinc-500">Safely closes the connection.</p>
+                    </div>
+                </div>
 
-                <h3 class="text-xl font-bold text-white mb-4">The RCONClient Class</h3>
-                <div class="overflow-x-auto mb-8">
-                    <table class="w-full text-sm text-left">
-                        <thead class="text-zinc-500 uppercase text-xs font-bold border-b border-white/5">
-                            <tr>
-                                <th class="py-4 px-4">Parameter</th>
-                                <th class="py-4 px-4">Type</th>
-                                <th class="py-4 px-4">Description</th>
-                            </tr>
-                        </thead>
+                <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Example</h4>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import RCONClient
+
+async with RCONClient("127.0.0.1", 25575, "password") as client:
+    response = await client.command("list")</code></pre>
+            </section>
+
+            <!-- RCON Response -->
+            <section id="rcon-response" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Model</span>
+                    <h2 class="text-3xl font-bold text-white">RCONResponse</h2>
+                </div>
+                <table class="w-full text-left">
+                    <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Property</th><th class="py-4 px-4">Type</th><th class="py-4 px-4">Description</th></tr></thead>
+                    <tbody>
+                        <tr><td class="table-cell font-mono text-brand-500">raw</td><td class="table-cell">str</td><td class="table-cell">Full response with § color codes.</td></tr>
+                        <tr><td class="table-cell font-mono text-brand-500">clean</td><td class="table-cell">str</td><td class="table-cell">Response text with color codes removed.</td></tr>
+                        <tr><td class="table-cell font-mono text-brand-500">lines</td><td class="table-cell">List[str]</td><td class="table-cell">Cleaned response split into lines.</td></tr>
+                        <tr><td class="table-cell font-mono text-brand-500">time_taken</td><td class="table-cell">float</td><td class="table-cell">Response time in seconds.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- RCON Pool -->
+            <section id="rcon-pool" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">RCONPool</h2>
+                </div>
+                <p class="mb-6">Manages multiple server connections. Perfect for network-wide announcements or status synchronization.</p>
+                <div class="space-y-6">
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">add_server(alias, host, port, password, ...)</code>
+                        <p class="text-sm mt-2 text-zinc-500">Adds a server to the pool with a unique alias.</p>
+                    </div>
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">async broadcast(cmd: str) -> Dict[str, RCONResponse]</code>
+                        <p class="text-sm mt-2 text-zinc-500">Sends command to ALL servers in parallel.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RCON Watcher -->
+            <section id="rcon-watcher" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">RCONWatcher</h2>
+                </div>
+                <p class="mb-6">Simulates an event system by polling commands at fixed intervals.</p>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">watcher = RCONWatcher(client, interval=1.0)
+
+# Triggers when 'joined' is found in 'list' output
+watcher.on_output_contains("list", "joined", my_callback)
+await watcher.start()</code></pre>
+            </section>
+
+            <!-- Status Query -->
+            <section id="status-query" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Function</span>
+                    <h2 class="text-3xl font-bold text-white">status()</h2>
+                </div>
+                <p class="mb-4 text-zinc-400">The swiss-army knife for server information. It follows this logic:</p>
+                <ul class="list-disc pl-6 space-y-2 mb-8 text-sm">
+                    <li>Resolves SRV records automatically (handles <code class="text-brand-500">mc.hypixel.net</code>).</li>
+                    <li>Attempts Modern 1.7+ JSON Ping.</li>
+                    <li>If fails, attempts Legacy Pre-1.7 Ping.</li>
+                </ul>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import status
+res = await status("play.example.com", port=25565, timeout=5.0)</code></pre>
+            </section>
+
+            <!-- Status Bulk -->
+            <section id="status-bulk" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Function</span>
+                    <h2 class="text-3xl font-bold text-white">status_bulk()</h2>
+                </div>
+                <p class="mb-4">Efficiently pings multiple servers concurrently using <code class="text-brand-500">asyncio.gather</code>.</p>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">results = await status_bulk([("server1.com", 25565), ("server2.com", 25565)])</code></pre>
+            </section>
+
+            <!-- Status Response -->
+            <section id="status-response" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Model</span>
+                    <h2 class="text-3xl font-bold text-white">StatusResponse</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Property</th><th class="py-4 px-4">Type</th><th class="py-4 px-4">Description</th></tr></thead>
                         <tbody>
-                            <tr class="table-row">
-                                <td class="py-4 px-4 font-mono text-brand-400">host</td>
-                                <td class="py-4 px-4">str</td>
-                                <td class="py-4 px-4 text-zinc-500">IP address or domain of the server.</td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="py-4 px-4 font-mono text-brand-400">port</td>
-                                <td class="py-4 px-4">int</td>
-                                <td class="py-4 px-4 text-zinc-500">RCON port (default: 25575).</td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="py-4 px-4 font-mono text-brand-400">auto_reconnect</td>
-                                <td class="py-4 px-4">bool</td>
-                                <td class="py-4 px-4 text-zinc-500">Automatically fix broken connections.</td>
-                            </tr>
+                            <tr><td class="table-cell font-mono text-brand-500">online</td><td class="table-cell">bool</td><td class="table-cell">True if server responded.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">players_online</td><td class="table-cell">int</td><td class="table-cell">Current player count.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">players_max</td><td class="table-cell">int</td><td class="table-cell">Maximum player capacity.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">players_sample</td><td class="table-cell">List[Player]</td><td class="table-cell">List of online player objects (name/UUID).</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">motd</td><td class="table-cell">str</td><td class="table-cell">Server description with formatting.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">motd_clean</td><td class="table-cell">str</td><td class="table-cell">Description without § codes.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">ping</td><td class="table-cell">float</td><td class="table-cell">Network latency in milliseconds.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">favicon</td><td class="table-cell">str?</td><td class="table-cell">Base64 encoded server icon.</td></tr>
+                            <tr><td class="table-cell font-mono text-brand-500">version_name</td><td class="table-cell">str?</td><td class="table-cell">Friendly version string (e.g. "1.20.1").</td></tr>
                         </tbody>
                     </table>
                 </div>
-
-                <div class="rounded-xl overflow-hidden border border-white/5 shadow-2xl bg-zinc-900">
-                    <div class="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-white/5">
-                        <span class="text-xs font-mono text-zinc-500">python</span>
-                    </div>
-                    <pre><code class="language-python">from mcnexus import RCONClient
-
-async def run_command():
-    # Use context manager for absolute safety
-    async with RCONClient("127.0.0.1", 25575, "mypass") as rcon:
-        # Long command? No problem.
-        res = await rcon.command("help")
-        print(f"Server says: {res.clean}")</code></pre>
-                </div>
             </section>
 
-            <!-- Status Section -->
-            <section id="status-simple" class="mb-24">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <!-- Exceptions -->
+            <section id="rcon-exceptions" class="mb-20">
+                <h2 class="text-3xl font-bold text-white mb-6">Exception Hierarchy</h2>
+                <div class="space-y-4">
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONError</code>
+                        <p class="text-sm text-zinc-500 mt-1">Base class. Contains <code class="text-zinc-300">host</code> and <code class="text-zinc-300">port</code> attributes.</p>
                     </div>
-                    <h2 class="text-4xl font-bold text-white">Server Status (SLP)</h2>
-                </div>
-
-                <p class="text-lg text-zinc-400 mb-8 leading-relaxed">
-                    Retrieve everything about a server without logging in. Our status module is the most compatible on the market, 
-                    supporting everything from **Classic 2011 servers** to the latest **1.20+ releases**.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div class="p-6 bg-surface rounded-2xl border border-white/5">
-                        <h4 class="text-white font-bold mb-2">Modern SLP</h4>
-                        <p class="text-sm text-zinc-500 leading-relaxed">Fast JSON-based protocol for versions 1.7 and above. Supports favicons and player samples.</p>
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONAuthError</code>
+                        <p class="text-sm text-zinc-500 mt-1">Raised when the RCON password is incorrect.</p>
                     </div>
-                    <div class="p-6 bg-surface rounded-2xl border border-white/5">
-                        <h4 class="text-white font-bold mb-2">Legacy SLP</h4>
-                        <p class="text-sm text-zinc-500 leading-relaxed">Fallback for older versions. Automatically engaged if the modern ping fails.</p>
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONConnectionError</code>
+                        <p class="text-sm text-zinc-500 mt-1">Raised on network failures or timeouts.</p>
                     </div>
-                    <div class="p-6 bg-surface rounded-2xl border border-white/5">
-                        <h4 class="text-white font-bold mb-2">SRV Resolution</h4>
-                        <p class="text-sm text-zinc-500 leading-relaxed">Full DNS support. It finds the real IP behind records like `mc.hypixel.net` instantly.</p>
-                    </div>
-                    <div class="p-6 bg-surface rounded-2xl border border-white/5">
-                        <h4 class="text-white font-bold mb-2">Precise Ping</h4>
-                        <p class="text-sm text-zinc-500 leading-relaxed">Latency calculation is done at the protocol level for extreme accuracy.</p>
-                    </div>
-                </div>
-
-                <div class="rounded-xl overflow-hidden border border-white/5 shadow-2xl bg-zinc-900">
-                    <div class="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-white/5">
-                        <span class="text-xs font-mono text-zinc-500">python</span>
-                    </div>
-                    <pre><code class="language-python">from mcnexus import status
-
-async def probe():
-    server = await status("play.myserver.com")
-    
-    if server.online:
-        print(f"[{server.ping:.1f}ms] {server.players_online} players")
-        print(f"MOTD: {server.motd_clean}")</code></pre>
                 </div>
             </section>
 
             <!-- Footer -->
-            <footer class="pt-20 pb-12 border-t border-white/5">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div class="text-sm text-zinc-500">
-                        &copy; 2026 mcnexus team. Licensed under MIT.
-                    </div>
-                    <div class="flex gap-8 text-sm font-medium">
-                        <a href="#" class="hover:text-white transition">Twitter</a>
-                        <a href="#" class="hover:text-white transition">Discord</a>
-                        <a href="#" class="hover:text-white transition">Changelog</a>
-                    </div>
-                </div>
+            <footer class="pt-12 border-t border-white/5 text-center sm:text-left">
+                <p class="text-xs text-zinc-600 tracking-widest uppercase">mcnexus Project &copy; 2026 | Licensed under MIT</p>
             </footer>
         </main>
-
-        <!-- Right TOC -->
-        <aside class="fixed right-0 w-64 h-[calc(100vh-5rem)] overflow-y-auto border-l border-white/5 p-6 hidden xl:block bg-dark">
-            <h5 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4 px-3">On this page</h5>
-            <ul class="space-y-3 text-sm">
-                <li><a href="#intro" class="text-zinc-400 hover:text-white transition px-3 block">Introduction</a></li>
-                <li><a href="#install" class="text-zinc-400 hover:text-white transition px-3 block">Installation</a></li>
-                <li><a href="#rcon-basics" class="text-zinc-400 hover:text-white transition px-3 block">RCON Basics</a></li>
-                <li><a href="#status-simple" class="text-zinc-400 hover:text-white transition px-3 block">Server Status</a></li>
-            </ul>
-        </aside>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        // Simple active link tracker
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const links = document.querySelectorAll('.sidebar-link');
+            let current = '';
+            sections.forEach(s => {
+                const top = s.offsetTop - 100;
+                if (window.pageYOffset >= top) current = s.getAttribute('id');
+            });
+            links.forEach(l => {
+                l.classList.remove('active');
+                if (l.getAttribute('href') === `#${current}`) l.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
