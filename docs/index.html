@@ -91,6 +91,13 @@
                     </nav>
                 </section>
                 <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Pterodactyl API</h3>
+                    <nav class="space-y-1">
+                        <a href="#ptero-client" class="sidebar-link">Client API</a>
+                        <a href="#ptero-app" class="sidebar-link">Application API</a>
+                    </nav>
+                </section>
+                <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Utilities</h3>
                     <nav class="space-y-1">
                         <a href="#utils-colors" class="sidebar-link">Color Stripping</a>
@@ -279,6 +286,43 @@ res = await status("play.hypixel.net")</code></pre>
                         </tbody>
                     </table>
                 </div>
+            </section>
+
+            <!-- Pterodactyl Client API -->
+            <section id="ptero-client" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">PterodactylClientAPI</h2>
+                </div>
+                <p class="mb-6 text-zinc-400">Complete async wrapper for the Pterodactyl Client API. Allows managing servers, files, schedules, and backups programmatically.</p>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import PterodactylClientAPI
+
+async with PterodactylClientAPI("https://panel.example.com", "YOUR_CLIENT_API_KEY") as api:
+    # Get server details
+    server = await api.get_server("abcdef12")
+    
+    # Send a console command
+    await api.send_command("abcdef12", "say Hello from mcnexus!")
+    
+    # Read a file
+    content = await api.read_file("abcdef12", "server.properties")</code></pre>
+            </section>
+
+            <!-- Pterodactyl Application API -->
+            <section id="ptero-app" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">PterodactylApplicationAPI</h2>
+                </div>
+                <p class="mb-6 text-zinc-400">Complete async wrapper for the Pterodactyl Application API (admin panel). Allows managing users, nodes, and creating servers.</p>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import PterodactylApplicationAPI
+
+async with PterodactylApplicationAPI("https://panel.example.com", "YOUR_APPLICATION_API_KEY") as admin_api:
+    # List all nodes
+    nodes = await admin_api.list_nodes()
+    
+    # Suspend a server
+    await admin_api.suspend_server(123)</code></pre>
             </section>
 
             <!-- Footer -->
