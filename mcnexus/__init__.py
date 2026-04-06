@@ -14,6 +14,16 @@ from mcnexus.rcon import (
     RCONTimeoutError
 )
 from mcnexus.status import status, status_bulk, StatusResponse
+from mcnexus.logs import (
+    LogWatcher,
+    LogEvent,
+    ChatEvent,
+    JoinEvent,
+    LeaveEvent,
+    DeathEvent,
+    AdvancementEvent,
+    GenericEvent
+)
 
 __version__ = "0.1.0"
 
@@ -25,6 +35,14 @@ __all__ = [
     "status",
     "status_bulk",
     "StatusResponse",
+    "LogWatcher",
+    "LogEvent",
+    "ChatEvent",
+    "JoinEvent",
+    "LeaveEvent",
+    "DeathEvent",
+    "AdvancementEvent",
+    "GenericEvent",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
