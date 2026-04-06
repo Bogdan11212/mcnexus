@@ -24,6 +24,16 @@ from mcnexus.logs import (
     AdvancementEvent,
     GenericEvent
 )
+from mcnexus.pterodactyl import (
+    PterodactylClientAPI,
+    PterodactylApplicationAPI,
+    PterodactylError,
+    PterodactylAuthError,
+    PterodactylNotFoundError,
+    PterodactylRateLimitError,
+    PterodactylServerError,
+    PterodactylValidationError
+)
 
 __version__ = "0.1.0"
 
@@ -43,6 +53,14 @@ __all__ = [
     "DeathEvent",
     "AdvancementEvent",
     "GenericEvent",
+    "PterodactylClientAPI",
+    "PterodactylApplicationAPI",
+    "PterodactylError",
+    "PterodactylAuthError",
+    "PterodactylNotFoundError",
+    "PterodactylRateLimitError",
+    "PterodactylServerError",
+    "PterodactylValidationError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
