@@ -84,6 +84,13 @@
                     </nav>
                 </section>
                 <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Event Engine</h3>
+                    <nav class="space-y-1">
+                        <a href="#log-watcher" class="sidebar-link">LogWatcher</a>
+                        <a href="#log-events" class="sidebar-link">Event Models</a>
+                    </nav>
+                </section>
+                <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Utilities</h3>
                     <nav class="space-y-1">
                         <a href="#utils-colors" class="sidebar-link">Color Stripping</a>
@@ -107,7 +114,7 @@
             <!-- Installation -->
             <section id="install" class="mb-20">
                 <h2 class="text-2xl font-bold text-white mb-6">Installation</h2>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-bash">pip install git+https://github.com/Bogdan11212/mcnexus.git</code></pre>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-bash">pip install mcnexus</code></pre>
             </section>
 
             <!-- RCON Client -->
@@ -116,7 +123,7 @@
                     <span class="endpoint-badge">Class</span>
                     <h2 class="text-3xl font-bold text-white">RCONClient</h2>
                 </div>
-                <p class="mb-6">The primary class for executing commands on a single server. Features automatic synchronization and re-connection.</p>
+                <p class="mb-6 text-zinc-400">The primary class for executing commands on a single server. Features automatic synchronization and re-connection.</p>
                 
                 <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Methods</h4>
                 <div class="space-y-8">
@@ -128,10 +135,6 @@
                         <code class="text-brand-500 font-mono font-bold">async connect()</code>
                         <p class="text-sm mt-2 text-zinc-500">Establishes connection and authenticates. Not needed if using <code class="bg-zinc-800 px-1 rounded">async with</code>.</p>
                     </div>
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">async disconnect()</code>
-                        <p class="text-sm mt-2 text-zinc-500">Safely closes the connection.</p>
-                    </div>
                 </div>
 
                 <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Example</h4>
@@ -139,6 +142,76 @@
 
 async with RCONClient("127.0.0.1", 25575, "password") as client:
     response = await client.command("list")</code></pre>
+            </section>
+
+            <!-- Log Watcher -->
+            <section id="log-watcher" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">LogWatcher</h2>
+                </div>
+                <p class="mb-6 text-zinc-400">
+                    Reads <code class="text-brand-500 font-mono">latest.log</code> in real-time and converts text lines into structured objects. 
+                    Allows reacting to chat, player deaths, and achievements without any Java plugins.
+                </p>
+                
+                <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Methods</h4>
+                <div class="space-y-8">
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">on_event(event_type, callback)</code>
+                        <p class="text-sm mt-2 text-zinc-500">Registers an async callback for a specific event type (e.g. ChatEvent).</p>
+                    </div>
+                    <div>
+                        <code class="text-brand-500 font-mono font-bold">async start(follow_from_end=True)</code>
+                        <p class="text-sm mt-2 text-zinc-500">Starts the background task following the log file.</p>
+                    </div>
+                </div>
+
+                <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Full Event Example</h4>
+                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import LogWatcher, ChatEvent, DeathEvent
+
+async def handle_chat(event: ChatEvent):
+    print(f"[CHAT] {event.player}: {event.message}")
+
+async def handle_death(event: DeathEvent):
+    print(f"[RIP] {event.player} died because of {event.cause}")
+
+watcher = LogWatcher("path/to/latest.log")
+watcher.on_event(ChatEvent, handle_chat)
+watcher.on_event(DeathEvent, handle_death)
+
+await watcher.start()</code></pre>
+            </section>
+
+            <!-- Event Models -->
+            <section id="log-events" class="mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="endpoint-badge">Models</span>
+                    <h2 class="text-3xl font-bold text-white">Event Models</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Event Class</th><th class="py-4 px-4">Available Properties</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td class="table-cell font-mono text-brand-500">ChatEvent</td>
+                                <td class="table-cell">player, message, timestamp</td>
+                            </tr>
+                            <tr>
+                                <td class="table-cell font-mono text-brand-500">JoinEvent</td>
+                                <td class="table-cell">player, ip (optional), timestamp</td>
+                            </tr>
+                            <tr>
+                                <td class="table-cell font-mono text-brand-500">DeathEvent</td>
+                                <td class="table-cell">player, cause (full message), timestamp</td>
+                            </tr>
+                            <tr>
+                                <td class="table-cell font-mono text-brand-500">AdvancementEvent</td>
+                                <td class="table-cell">player, advancement, timestamp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- RCON Response -->
@@ -164,7 +237,7 @@ async with RCONClient("127.0.0.1", 25575, "password") as client:
                     <span class="endpoint-badge">Class</span>
                     <h2 class="text-3xl font-bold text-white">RCONPool</h2>
                 </div>
-                <p class="mb-6">Manages multiple server connections. Perfect for network-wide announcements or status synchronization.</p>
+                <p class="mb-6 text-zinc-400">Manages multiple server connections. Perfect for network-wide announcements or status synchronization.</p>
                 <div class="space-y-6">
                     <div>
                         <code class="text-brand-500 font-mono font-bold">add_server(alias, host, port, password, ...)</code>
@@ -177,44 +250,15 @@ async with RCONClient("127.0.0.1", 25575, "password") as client:
                 </div>
             </section>
 
-            <!-- RCON Watcher -->
-            <section id="rcon-watcher" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Class</span>
-                    <h2 class="text-3xl font-bold text-white">RCONWatcher</h2>
-                </div>
-                <p class="mb-6">Simulates an event system by polling commands at fixed intervals.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">watcher = RCONWatcher(client, interval=1.0)
-
-# Triggers when 'joined' is found in 'list' output
-watcher.on_output_contains("list", "joined", my_callback)
-await watcher.start()</code></pre>
-            </section>
-
             <!-- Status Query -->
             <section id="status-query" class="mb-20">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="endpoint-badge">Function</span>
                     <h2 class="text-3xl font-bold text-white">status()</h2>
                 </div>
-                <p class="mb-4 text-zinc-400">The swiss-army knife for server information. It follows this logic:</p>
-                <ul class="list-disc pl-6 space-y-2 mb-8 text-sm">
-                    <li>Resolves SRV records automatically (handles <code class="text-brand-500">mc.hypixel.net</code>).</li>
-                    <li>Attempts Modern 1.7+ JSON Ping.</li>
-                    <li>If fails, attempts Legacy Pre-1.7 Ping.</li>
-                </ul>
+                <p class="mb-4 text-zinc-400">The swiss-army knife for server information. It handles SRV records and protocol fallbacks automatically.</p>
                 <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import status
-res = await status("play.example.com", port=25565, timeout=5.0)</code></pre>
-            </section>
-
-            <!-- Status Bulk -->
-            <section id="status-bulk" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Function</span>
-                    <h2 class="text-3xl font-bold text-white">status_bulk()</h2>
-                </div>
-                <p class="mb-4">Efficiently pings multiple servers concurrently using <code class="text-brand-500">asyncio.gather</code>.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">results = await status_bulk([("server1.com", 25565), ("server2.com", 25565)])</code></pre>
+res = await status("play.hypixel.net")</code></pre>
             </section>
 
             <!-- Status Response -->
@@ -230,33 +274,10 @@ res = await status("play.example.com", port=25565, timeout=5.0)</code></pre>
                             <tr><td class="table-cell font-mono text-brand-500">online</td><td class="table-cell">bool</td><td class="table-cell">True if server responded.</td></tr>
                             <tr><td class="table-cell font-mono text-brand-500">players_online</td><td class="table-cell">int</td><td class="table-cell">Current player count.</td></tr>
                             <tr><td class="table-cell font-mono text-brand-500">players_max</td><td class="table-cell">int</td><td class="table-cell">Maximum player capacity.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">players_sample</td><td class="table-cell">List[Player]</td><td class="table-cell">List of online player objects (name/UUID).</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">motd</td><td class="table-cell">str</td><td class="table-cell">Server description with formatting.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">motd_clean</td><td class="table-cell">str</td><td class="table-cell">Description without § codes.</td></tr>
                             <tr><td class="table-cell font-mono text-brand-500">ping</td><td class="table-cell">float</td><td class="table-cell">Network latency in milliseconds.</td></tr>
                             <tr><td class="table-cell font-mono text-brand-500">favicon</td><td class="table-cell">str?</td><td class="table-cell">Base64 encoded server icon.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">version_name</td><td class="table-cell">str?</td><td class="table-cell">Friendly version string (e.g. "1.20.1").</td></tr>
                         </tbody>
                     </table>
-                </div>
-            </section>
-
-            <!-- Exceptions -->
-            <section id="rcon-exceptions" class="mb-20">
-                <h2 class="text-3xl font-bold text-white mb-6">Exception Hierarchy</h2>
-                <div class="space-y-4">
-                    <div class="p-4 bg-surface rounded-lg border border-white/5">
-                        <code class="text-red-400 font-bold">RCONError</code>
-                        <p class="text-sm text-zinc-500 mt-1">Base class. Contains <code class="text-zinc-300">host</code> and <code class="text-zinc-300">port</code> attributes.</p>
-                    </div>
-                    <div class="p-4 bg-surface rounded-lg border border-white/5">
-                        <code class="text-red-400 font-bold">RCONAuthError</code>
-                        <p class="text-sm text-zinc-500 mt-1">Raised when the RCON password is incorrect.</p>
-                    </div>
-                    <div class="p-4 bg-surface rounded-lg border border-white/5">
-                        <code class="text-red-400 font-bold">RCONConnectionError</code>
-                        <p class="text-sm text-zinc-500 mt-1">Raised on network failures or timeouts.</p>
-                    </div>
                 </div>
             </section>
 
@@ -270,7 +291,6 @@ res = await status("play.example.com", port=25565, timeout=5.0)</code></pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script>
-        // Simple active link tracker
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             const links = document.querySelectorAll('.sidebar-link');
