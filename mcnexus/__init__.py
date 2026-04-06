@@ -45,6 +45,17 @@ from mcnexus.pufferpanel import (
     PufferPanelPermissionError,
     PufferPanelServerError
 )
+from mcnexus.spark import (
+    SparkAnalyzer,
+    SparkClient,
+    SparkProfile,
+    SparkMetadata,
+    SparkPluginAnalysis,
+    SparkError,
+    SparkFetchError,
+    SparkParseError,
+    SparkInvalidURLError
+)
 
 __version__ = "1.0.0"
 
@@ -82,6 +93,15 @@ __all__ = [
     "PufferPanelNotFoundError",
     "PufferPanelPermissionError",
     "PufferPanelServerError",
+    "SparkAnalyzer",
+    "SparkClient",
+    "SparkProfile",
+    "SparkMetadata",
+    "SparkPluginAnalysis",
+    "SparkError",
+    "SparkFetchError",
+    "SparkParseError",
+    "SparkInvalidURLError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
