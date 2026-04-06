@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mcnexus Documentation | Full API Reference</title>
+    <title>mcnexus Documentation | Core API Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,7 @@
         .sidebar-link.active { @apply text-brand-50 text-brand-500 bg-brand-500/10; }
         .table-cell { @apply py-4 px-4 text-sm border-b border-white/5; }
         .endpoint-badge { @apply text-[10px] font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 uppercase tracking-wider; }
+        .method-block { @apply mb-8 p-6 bg-surface rounded-xl border border-white/5; }
     </style>
 </head>
 <body class="bg-dark text-zinc-400">
@@ -45,7 +46,7 @@
                 <div class="w-7 h-7 bg-brand-500 rounded flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-                <span class="text-lg font-bold text-white tracking-tight">mcnexus <span class="text-zinc-600 font-mono text-xs">v1.x</span></span>
+                <span class="text-lg font-bold text-white tracking-tight">mcnexus <span class="text-zinc-600 font-mono text-xs">Core API</span></span>
             </div>
             <div class="flex items-center gap-6">
                 <a href="https://pypi.org/project/mcnexus/" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition">PyPI</a>
@@ -56,7 +57,7 @@
 
     <div class="flex pt-16">
         <!-- Sidebar -->
-        <aside class="fixed left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r border-white/5 p-6 hidden lg:block bg-dark">
+        <aside class="fixed left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r border-white/5 p-6 hidden lg:block bg-dark text-zinc-500">
             <div class="space-y-6">
                 <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Getting Started</h3>
@@ -69,44 +70,29 @@
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">RCON Core</h3>
                     <nav class="space-y-1">
                         <a href="#rcon-client" class="sidebar-link">RCONClient</a>
-                        <a href="#rcon-response" class="sidebar-link">RCONResponse</a>
                         <a href="#rcon-pool" class="sidebar-link">RCONPool</a>
                         <a href="#rcon-watcher" class="sidebar-link">RCONWatcher</a>
-                        <a href="#rcon-exceptions" class="sidebar-link">Exceptions</a>
                     </nav>
                 </section>
                 <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Server Status</h3>
                     <nav class="space-y-1">
-                        <a href="#status-query" class="sidebar-link">Status Query</a>
+                        <a href="#status-single" class="sidebar-link">Single Query</a>
                         <a href="#status-bulk" class="sidebar-link">Bulk Scanning</a>
-                        <a href="#status-response" class="sidebar-link">StatusResponse</a>
                     </nav>
                 </section>
                 <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Event Engine</h3>
                     <nav class="space-y-1">
                         <a href="#log-watcher" class="sidebar-link">LogWatcher</a>
-                        <a href="#log-events" class="sidebar-link">Event Models</a>
                     </nav>
                 </section>
                 <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Pterodactyl API</h3>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Models & Data</h3>
                     <nav class="space-y-1">
-                        <a href="#ptero-client" class="sidebar-link">Client API</a>
-                        <a href="#ptero-app" class="sidebar-link">Application API</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">PufferPanel API</h3>
-                    <nav class="space-y-1">
-                        <a href="#puffer-api" class="sidebar-link">Unified API</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Utilities</h3>
-                    <nav class="space-y-1">
-                        <a href="#utils-colors" class="sidebar-link">Color Stripping</a>
+                        <a href="#rcon-response" class="sidebar-link">RCONResponse</a>
+                        <a href="#status-response" class="sidebar-link">StatusResponse</a>
+                        <a href="#exceptions" class="sidebar-link">Exceptions</a>
                     </nav>
                 </section>
             </div>
@@ -115,245 +101,193 @@
         <!-- Content -->
         <main class="flex-1 lg:ml-64 px-8 lg:px-12 py-12 max-w-5xl">
             
-            <!-- Introduction -->
-            <section id="intro" class="mb-20">
-                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-6">Introduction</h1>
-                <p class="text-lg leading-relaxed text-zinc-400">
-                    mcnexus is an asynchronous, high-performance Python library for Minecraft server management. 
-                    It provides low-level protocol implementations wrapped in a developer-friendly API.
+            <section id="intro" class="mb-20 text-center lg:text-left">
+                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-6 leading-tight">Modern Python <br><span class="text-brand-500">Minecraft Engineering.</span></h1>
+                <p class="text-lg leading-relaxed text-zinc-400 max-w-3xl">
+                    mcnexus is a production-grade library providing asynchronous tools for Minecraft server management. 
+                    It is designed for performance, reliability, and ease of use.
                 </p>
             </section>
 
-            <!-- Installation -->
-            <section id="install" class="mb-20">
-                <h2 class="text-2xl font-bold text-white mb-6">Installation</h2>
+            <section id="install" class="mb-24">
+                <h2 class="text-2xl font-bold text-white mb-6">📦 Installation</h2>
                 <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-bash">pip install mcnexus</code></pre>
             </section>
 
-            <!-- RCON Client -->
-            <section id="rcon-client" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
+            <!-- RCON CLIENT -->
+            <section id="rcon-client" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
                     <span class="endpoint-badge">Class</span>
                     <h2 class="text-3xl font-bold text-white">RCONClient</h2>
                 </div>
-                <p class="mb-6 text-zinc-400">The primary class for executing commands on a single server. Features automatic synchronization and re-connection.</p>
                 
-                <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Methods</h4>
-                <div class="space-y-8">
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">async command(cmd: str) -> RCONResponse</code>
-                        <p class="text-sm mt-2 text-zinc-500">Sends a command to the server. Handles multi-packet responses automatically.</p>
-                    </div>
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">async connect()</code>
-                        <p class="text-sm mt-2 text-zinc-500">Establishes connection and authenticates. Not needed if using <code class="bg-zinc-800 px-1 rounded">async with</code>.</p>
-                    </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async command(cmd: str) -> RCONResponse</code>
+                    <p class="mt-2 text-sm">Sends a command. Automatically handles multi-packet responses and ensures synchronization.</p>
                 </div>
-
-                <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Example</h4>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import RCONClient
-
-async with RCONClient("127.0.0.1", 25575, "password") as client:
-    response = await client.command("list")</code></pre>
-            </section>
-
-            <!-- Log Watcher -->
-            <section id="log-watcher" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Class</span>
-                    <h2 class="text-3xl font-bold text-white">LogWatcher</h2>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async connect()</code>
+                    <p class="mt-2 text-sm">Manually establishes the connection. Recommended to use <code class="text-zinc-300">async with</code> instead.</p>
                 </div>
-                <p class="mb-6 text-zinc-400">
-                    Reads <code class="text-brand-500 font-mono">latest.log</code> in real-time and converts text lines into structured objects. 
-                    Allows reacting to chat, player deaths, and achievements without any Java plugins.
-                </p>
-                
-                <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Methods</h4>
-                <div class="space-y-8">
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">on_event(event_type, callback)</code>
-                        <p class="text-sm mt-2 text-zinc-500">Registers an async callback for a specific event type (e.g. ChatEvent).</p>
-                    </div>
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">async start(follow_from_end=True)</code>
-                        <p class="text-sm mt-2 text-zinc-500">Starts the background task following the log file.</p>
-                    </div>
-                </div>
-
-                <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Full Event Example</h4>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import LogWatcher, ChatEvent, DeathEvent
-
-async def handle_chat(event: ChatEvent):
-    print(f"[CHAT] {event.player}: {event.message}")
-
-async def handle_death(event: DeathEvent):
-    print(f"[RIP] {event.player} died because of {event.cause}")
-
-watcher = LogWatcher("path/to/latest.log")
-watcher.on_event(ChatEvent, handle_chat)
-watcher.on_event(DeathEvent, handle_death)
-
-await watcher.start()</code></pre>
-            </section>
-
-            <!-- Event Models -->
-            <section id="log-events" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Models</span>
-                    <h2 class="text-3xl font-bold text-white">Event Models</h2>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Event Class</th><th class="py-4 px-4">Available Properties</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td class="table-cell font-mono text-brand-500">ChatEvent</td>
-                                <td class="table-cell">player, message, timestamp</td>
-                            </tr>
-                            <tr>
-                                <td class="table-cell font-mono text-brand-500">JoinEvent</td>
-                                <td class="table-cell">player, ip (optional), timestamp</td>
-                            </tr>
-                            <tr>
-                                <td class="table-cell font-mono text-brand-500">DeathEvent</td>
-                                <td class="table-cell">player, cause (full message), timestamp</td>
-                            </tr>
-                            <tr>
-                                <td class="table-cell font-mono text-brand-500">AdvancementEvent</td>
-                                <td class="table-cell">player, advancement, timestamp</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async disconnect()</code>
+                    <p class="mt-2 text-sm">Closes the active connection.</p>
                 </div>
             </section>
 
-            <!-- RCON Response -->
-            <section id="rcon-response" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Model</span>
-                    <h2 class="text-3xl font-bold text-white">RCONResponse</h2>
-                </div>
-                <table class="w-full text-left">
-                    <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Property</th><th class="py-4 px-4">Type</th><th class="py-4 px-4">Description</th></tr></thead>
-                    <tbody>
-                        <tr><td class="table-cell font-mono text-brand-500">raw</td><td class="table-cell">str</td><td class="table-cell">Full response with § color codes.</td></tr>
-                        <tr><td class="table-cell font-mono text-brand-500">clean</td><td class="table-cell">str</td><td class="table-cell">Response text with color codes removed.</td></tr>
-                        <tr><td class="table-cell font-mono text-brand-500">lines</td><td class="table-cell">List[str]</td><td class="table-cell">Cleaned response split into lines.</td></tr>
-                        <tr><td class="table-cell font-mono text-brand-500">time_taken</td><td class="table-cell">float</td><td class="table-cell">Response time in seconds.</td></tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- RCON Pool -->
-            <section id="rcon-pool" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
+            <!-- RCON POOL -->
+            <section id="rcon-pool" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
                     <span class="endpoint-badge">Class</span>
                     <h2 class="text-3xl font-bold text-white">RCONPool</h2>
                 </div>
-                <p class="mb-6 text-zinc-400">Manages multiple server connections. Perfect for network-wide announcements or status synchronization.</p>
-                <div class="space-y-6">
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">add_server(alias, host, port, password, ...)</code>
-                        <p class="text-sm mt-2 text-zinc-500">Adds a server to the pool with a unique alias.</p>
-                    </div>
-                    <div>
-                        <code class="text-brand-500 font-mono font-bold">async broadcast(cmd: str) -> Dict[str, RCONResponse]</code>
-                        <p class="text-sm mt-2 text-zinc-500">Sends command to ALL servers in parallel.</p>
-                    </div>
+                <p class="mb-8">Manage a network of servers concurrently.</p>
+
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">add_server(alias, host, port, password, timeout=10.0, auto_reconnect=True)</code>
+                    <p class="mt-2 text-sm">Registers a server in the pool under a specific alias.</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async connect_all() -> Dict[str, bool]</code>
+                    <p class="mt-2 text-sm">Attempts to connect to every server in the pool simultaneously.</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async broadcast(cmd: str) -> Dict[str, Union[RCONResponse, Exception]]</code>
+                    <p class="mt-2 text-sm">Sends a command to ALL connected servers at once.</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">get_client(alias: str) -> RCONClient</code>
+                    <p class="mt-2 text-sm">Retrieves the specific client instance for a given alias.</p>
                 </div>
             </section>
 
-            <!-- Status Query -->
-            <section id="status-query" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
+            <!-- RCON WATCHER -->
+            <section id="rcon-watcher" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">RCONWatcher</h2>
+                </div>
+                <p class="mb-8">Simulate event streams using periodic command polling.</p>
+
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">on_command_output(command, callback)</code>
+                    <p class="mt-2 text-sm">Executes <code class="text-zinc-300">callback</code> every interval with the result of the <code class="text-zinc-300">command</code>.</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">on_output_contains(command, substring, callback)</code>
+                    <p class="mt-2 text-sm">Executes <code class="text-zinc-300">callback</code> only if the result contains the <code class="text-zinc-300">substring</code>.</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async start() / async stop()</code>
+                    <p class="mt-2 text-sm">Controls the execution of the watcher background tasks.</p>
+                </div>
+            </section>
+
+            <!-- STATUS SINGLE -->
+            <section id="status-single" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
                     <span class="endpoint-badge">Function</span>
                     <h2 class="text-3xl font-bold text-white">status()</h2>
                 </div>
-                <p class="mb-4 text-zinc-400">The swiss-army knife for server information. It handles SRV records and protocol fallbacks automatically.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import status
-res = await status("play.hypixel.net")</code></pre>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async status(host, port=25565, timeout=5.0, try_legacy=True) -> StatusResponse</code>
+                    <p class="mt-2 text-sm text-zinc-400">Pings a server. Automatically resolves SRV records and falls back to Legacy protocol if needed.</p>
+                </div>
             </section>
 
-            <!-- Status Response -->
-            <section id="status-response" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Model</span>
-                    <h2 class="text-3xl font-bold text-white">StatusResponse</h2>
+            <!-- STATUS BULK -->
+            <section id="status-bulk" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
+                    <span class="endpoint-badge">Function</span>
+                    <h2 class="text-3xl font-bold text-white">status_bulk()</h2>
                 </div>
-                <div class="overflow-x-auto">
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async status_bulk(servers: List[tuple], timeout=5.0) -> List[StatusResponse]</code>
+                    <p class="mt-2 text-sm text-zinc-400">Queries multiple servers in parallel. <code class="text-zinc-300">servers</code> should be a list of <code class="text-zinc-300">(host, port)</code> tuples.</p>
+                </div>
+            </section>
+
+            <!-- LOG WATCHER -->
+            <section id="log-watcher" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">LogWatcher</h2>
+                </div>
+                <p class="mb-8">Native event engine that parses <code class="text-brand-500">latest.log</code> in real-time.</p>
+
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">on_event(event_type, callback)</code>
+                    <p class="mt-2 text-sm">Binds an async function to a specific event (e.g., <code class="text-zinc-300">ChatEvent</code>, <code class="text-zinc-300">DeathEvent</code>).</p>
+                </div>
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono">async start(follow_from_end=True)</code>
+                    <p class="mt-2 text-sm">Starts tailing the log file. If <code class="text-zinc-300">True</code>, it ignores previous logs.</p>
+                </div>
+            </section>
+
+            <!-- DATA MODELS -->
+            <section id="rcon-response" class="mb-24">
+                <h2 class="text-2xl font-bold text-white mb-6">Data Models</h2>
+                
+                <h3 class="text-lg font-semibold text-zinc-300 mb-4">RCONResponse</h3>
+                <div class="overflow-x-auto mb-12">
                     <table class="w-full text-left">
-                        <thead><tr class="text-xs font-bold text-zinc-600 uppercase border-b border-white/5"><th class="py-4 px-4">Property</th><th class="py-4 px-4">Type</th><th class="py-4 px-4">Description</th></tr></thead>
+                        <thead class="text-xs text-zinc-600 uppercase border-b border-white/5">
+                            <tr><th class="py-4 px-4">Property</th><th class="py-4 px-4">Description</th></tr>
+                        </thead>
                         <tbody>
-                            <tr><td class="table-cell font-mono text-brand-500">online</td><td class="table-cell">bool</td><td class="table-cell">True if server responded.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">players_online</td><td class="table-cell">int</td><td class="table-cell">Current player count.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">players_max</td><td class="table-cell">int</td><td class="table-cell">Maximum player capacity.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">ping</td><td class="table-cell">float</td><td class="table-cell">Network latency in milliseconds.</td></tr>
-                            <tr><td class="table-cell font-mono text-brand-500">favicon</td><td class="table-cell">str?</td><td class="table-cell">Base64 encoded server icon.</td></tr>
+                            <tr><td class="table-cell font-mono">raw</td><td class="table-cell">The exact string from the server.</td></tr>
+                            <tr><td class="table-cell font-mono">clean</td><td class="table-cell">String without Minecraft formatting codes (§).</td></tr>
+                            <tr><td class="table-cell font-mono">lines</td><td class="table-cell">List of cleaned lines.</td></tr>
+                            <tr><td class="table-cell font-mono">time_taken</td><td class="table-cell">Execution time in seconds.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="status-response" class="text-lg font-semibold text-zinc-300 mb-4">StatusResponse</h3>
+                <div class="overflow-x-auto mb-12">
+                    <table class="w-full text-left">
+                        <thead class="text-xs text-zinc-600 uppercase border-b border-white/5">
+                            <tr><th class="py-4 px-4">Property</th><th class="py-4 px-4">Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="table-cell font-mono">online</td><td class="table-cell">Boolean status of the server.</td></tr>
+                            <tr><td class="table-cell font-mono">players_online</td><td class="table-cell">Current player count.</td></tr>
+                            <tr><td class="table-cell font-mono">players_max</td><td class="table-cell">Maximum player capacity.</td></tr>
+                            <tr><td class="table-cell font-mono">ping</td><td class="table-cell">Latency in milliseconds.</td></tr>
+                            <tr><td class="table-cell font-mono">version_name</td><td class="table-cell">Server version string.</td></tr>
+                            <tr><td class="table-cell font-mono">favicon</td><td class="table-cell">Base64 encoded icon.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Pterodactyl Client API -->
-            <section id="ptero-client" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Class</span>
-                    <h2 class="text-3xl font-bold text-white">PterodactylClientAPI</h2>
+            <!-- EXCEPTIONS -->
+            <section id="exceptions" class="mb-24">
+                <h2 class="text-2xl font-bold text-white mb-6">Error Handling</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONAuthError</code>
+                        <p class="text-xs mt-1">Invalid RCON password.</p>
+                    </div>
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONTimeoutError</code>
+                        <p class="text-xs mt-1">Operation exceeded timeout.</p>
+                    </div>
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONConnectionError</code>
+                        <p class="text-xs mt-1">Network-level failure.</p>
+                    </div>
+                    <div class="p-4 bg-surface rounded-lg border border-white/5">
+                        <code class="text-red-400 font-bold">RCONCommandError</code>
+                        <p class="text-xs mt-1">Error during command execution.</p>
+                    </div>
                 </div>
-                <p class="mb-6 text-zinc-400">Complete async wrapper for the Pterodactyl Client API. Allows managing servers, files, schedules, and backups programmatically.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import PterodactylClientAPI
-
-async with PterodactylClientAPI("https://panel.example.com", "YOUR_CLIENT_API_KEY") as api:
-    # Get server details
-    server = await api.get_server("abcdef12")
-    
-    # Send a console command
-    await api.send_command("abcdef12", "say Hello from mcnexus!")
-    
-    # Read a file
-    content = await api.read_file("abcdef12", "server.properties")</code></pre>
-            </section>
-
-            <!-- Pterodactyl Application API -->
-            <section id="ptero-app" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Class</span>
-                    <h2 class="text-3xl font-bold text-white">PterodactylApplicationAPI</h2>
-                </div>
-                <p class="mb-6 text-zinc-400">Complete async wrapper for the Pterodactyl Application API (admin panel). Allows managing users, nodes, and creating servers.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import PterodactylApplicationAPI
-
-async with PterodactylApplicationAPI("https://panel.example.com", "YOUR_APPLICATION_API_KEY") as admin_api:
-    # List all nodes
-    nodes = await admin_api.list_nodes()
-    
-    # Suspend a server
-    await admin_api.suspend_server(123)</code></pre>
-            </section>
-
-            <!-- PufferPanel API -->
-            <section id="puffer-api" class="mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="endpoint-badge">Class</span>
-                    <h2 class="text-3xl font-bold text-white">PufferPanelAPI</h2>
-                </div>
-                <p class="mb-6 text-zinc-400">Unified async wrapper for PufferPanel. Manage servers, users, nodes, and templates using OAuth2 authentication.</p>
-                <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import PufferPanelAPI
-
-async with PufferPanelAPI("https://puffer.example.com", "CLIENT_ID", "CLIENT_SECRET") as ptero:
-    # Get all servers
-    servers = await ptero.list_servers()
-    
-    # Send power action
-    await ptero.send_server_power("server_id", "restart")
-    
-    # Write to a file
-    await ptero.write_file("server_id", "config.json", '{"key": "value"}')</code></pre>
             </section>
 
             <!-- Footer -->
             <footer class="pt-12 border-t border-white/5 text-center sm:text-left">
-                <p class="text-xs text-zinc-600 tracking-widest uppercase">mcnexus Project &copy; 2026 | Licensed under MIT</p>
+                <p class="text-xs text-zinc-600 tracking-widest uppercase">mcnexus Core Project &copy; 2026 | MIT Licensed</p>
             </footer>
         </main>
     </div>
