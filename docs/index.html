@@ -3,180 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mcnexus Docs | Introduction</title>
+    <title>mcnexus | Professional Minecraft Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        brand: { 500: '#4caf50', 600: '#388e3c' },
-                        dark: '#09090b',
-                        surface: '#121214',
+                        gh: {
+                            bg: '#0d1117',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            muted: '#8b949e',
+                            green: '#238636'
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        pre[class*="language-"] { margin: 0 !important; background: #18181b !important; font-size: 0.875rem !important; }
-        .sidebar-link { @apply block px-3 py-2 text-sm text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all; }
-        .sidebar-link.active { @apply text-brand-500 bg-brand-500/10 font-bold; }
-        .mobile-menu-overlay { @apply fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .nav-link { @apply block px-3 py-2 text-sm text-gh-muted hover:text-white hover:bg-white/5 rounded-md transition-all; }
+        .nav-link.active { @apply text-white bg-white/5 font-semibold border-l-2 border-gh-green pl-2.5 rounded-none; }
+        pre { border: 1px solid #30363d !important; border-radius: 6px !important; }
     </style>
 </head>
-<body class="bg-dark text-zinc-400">
+<body class="selection:bg-gh-green/30">
     
-    <!-- Top Nav -->
-    <nav class="fixed top-0 z-50 w-full bg-dark/80 backdrop-blur-md border-b border-white/5">
-        <div class="px-4 lg:px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <button id="mobile-menu-btn" class="lg:hidden text-zinc-400 hover:text-white transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-                <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 bg-brand-500 rounded flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <span class="text-lg font-bold text-white tracking-tight">mcnexus <span class="text-zinc-600 font-mono text-xs">v1.0.0</span></span>
+    <!-- Header -->
+    <header class="fixed top-0 z-50 w-full bg-[#161b22] border-b border-gh-border py-3 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-btn" class="lg:hidden text-gh-muted hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gh-green rounded-md flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-            </div>
-            <div class="flex items-center gap-4 lg:gap-6">
-                <a href="https://pypi.org/project/mcnexus/" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition">PyPI</a>
-                <a href="https://github.com/Bogdan11212/mcnexus" class="text-sm font-medium hover:text-white transition">GitHub</a>
-            </div>
+                <span class="text-white font-bold tracking-tight text-lg underline-offset-4 group-hover:underline">mcnexus</span>
+            </a>
         </div>
-    </nav>
+        <div class="flex items-center gap-6 text-sm font-medium">
+            <a href="https://pypi.org/project/mcnexus/" class="text-gh-muted hover:text-gh-green transition">PyPI</a>
+            <a href="https://github.com/Bogdan11212/mcnexus" class="hidden sm:block text-gh-muted hover:text-white transition">GitHub</a>
+        </div>
+    </header>
 
-    <div class="flex pt-16">
-        <!-- Sidebar Overlay (Mobile) -->
-        <div id="sidebar-overlay" class="mobile-menu-overlay"></div>
-
-        <!-- Sidebar -->
-        <aside id="sidebar" class="fixed left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r border-white/5 p-6 bg-dark z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-            <div class="space-y-6">
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Getting Started</h3>
-                    <nav class="space-y-1">
-                        <a href="index.html" class="sidebar-link active">Introduction</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Core Modules</h3>
-                    <nav class="space-y-1">
-                        <a href="rcon.html" class="sidebar-link">RCON Protocol</a>
-                        <a href="status.html" class="sidebar-link">Server Status</a>
-                        <a href="logs.html" class="sidebar-link">Log Engine</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Advanced Tools</h3>
-                    <nav class="space-y-1">
-                        <a href="management.html" class="sidebar-link">Power Control</a>
-                        <a href="scheduling.html" class="sidebar-link">Schedules</a>
-                        <a href="stats.html" class="sidebar-link">Performance Stats</a>
-                        <a href="spark.html" class="sidebar-link">Spark Profiler</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">API Reference</h3>
-                    <nav class="space-y-1">
-                        <a href="models.html" class="sidebar-link">Models & Errors</a>
-                    </nav>
-                </section>
+    <div class="flex pt-14 min-h-screen">
+        <!-- Sidebar Container -->
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden hidden"></div>
+        <aside id="sidebar-container" class="fixed left-0 w-64 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-gh-border bg-[#0d1117] z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 p-6">
+            <div id="sidebar-inject">
+                <!-- Sidebar content loaded from sidebar.js -->
             </div>
         </aside>
 
         <!-- Content -->
-        <main class="flex-1 lg:ml-64 px-4 lg:px-12 py-12 max-w-5xl">
+        <main class="flex-1 lg:ml-64 px-6 lg:px-16 py-12 max-w-5xl overflow-x-hidden">
             
             <!-- Hero -->
-            <section id="intro" class="mb-20">
-                <div class="flex flex-col items-center text-center mb-12">
-                    <img src="https://i127.fastpic.org/big/2026/0406/02/ced1b0369b33bd583f822ba82a5c0502.png?md5=gTbekEAYxGucHAWj6uslQQ&expires=1775440800" alt="mcnexus logo" width="180" class="mb-6 drop-shadow-[0_0_15px_rgba(76,175,80,0.3)]" />
-                    <h1 class="text-4xl lg:text-6xl font-extrabold text-white tracking-tight mb-4">mcnexus</h1>
-                    <p class="text-xl text-zinc-400">Professional High-Performance Asynchronous Minecraft Library.</p>
-                </div>
-
-                <!-- Links Section -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-                    <a href="https://pypi.org/project/mcnexus/" class="p-4 bg-surface border border-white/5 rounded-xl hover:border-brand-500/50 transition flex flex-col items-center gap-2">
-                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Package</span>
-                        <span class="text-brand-500 font-bold">PyPI Registry</span>
-                    </a>
-                    <a href="https://github.com/Bogdan11212/mcnexus" class="p-4 bg-surface border border-white/5 rounded-xl hover:border-brand-500/50 transition flex flex-col items-center gap-2">
-                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Source Code</span>
-                        <span class="text-white font-bold">GitHub Repository</span>
-                    </a>
-                    <a href="models.html" class="p-4 bg-surface border border-white/5 rounded-xl hover:border-brand-500/50 transition flex flex-col items-center gap-2">
-                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Reference</span>
-                        <span class="text-white font-bold">API & Errors</span>
-                    </a>
-                </div>
-
-                <!-- README Content -->
-                <div class="prose prose-invert max-w-none space-y-12 text-zinc-400 leading-relaxed">
-                    <div class="bg-surface p-8 rounded-2xl border border-white/5 shadow-2xl">
-                        <h2 class="text-2xl font-bold text-white mb-6">🚀 Library Overview</h2>
-                        <p class="mb-6"><strong>mcnexus</strong> is built for scale. Whether you are running a small survival server or a massive network, our asynchronous architecture ensures zero bottlenecks.</p>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <h4 class="text-white font-bold flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
-                                    Modern RCON
-                                </h4>
-                                <p class="text-sm">Handling large packets and broken connections natively.</p>
-                            </div>
-                            <div class="space-y-2">
-                                <h4 class="text-white font-bold flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
-                                    Unified Stats
-                                </h4>
-                                <p class="text-sm">Real-time CPU/RAM monitoring across multiple panels.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-12">
-                        <h2 class="text-2xl font-bold text-white mb-6">📦 Quick Installation</h2>
-                        <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-bash">pip install mcnexus</code></pre>
-                    </div>
+            <section class="mb-16 border-b border-gh-border pb-16 text-center lg:text-left">
+                <img src="https://i127.fastpic.org/big/2026/0406/02/ced1b0369b33bd583f822ba82a5c0502.png?md5=gTbekEAYxGucHAWj6uslQQ&expires=1775440800" alt="mcnexus logo" width="140" class="mx-auto lg:mx-0 mb-8 rounded-xl shadow-2xl" />
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">mcnexus</h1>
+                <p class="text-xl text-gh-muted max-w-2xl leading-relaxed">
+                    A professional, high-performance asynchronous library for Minecraft server engineering.
+                </p>
+                <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-3">
+                    <img src="https://img.shields.io/pypi/v/mcnexus?color=238636&style=flat-square" alt="v1.0.0">
+                    <img src="https://img.shields.io/github/license/Bogdan11212/mcnexus?color=238636&style=flat-square" alt="MIT">
                 </div>
             </section>
 
-            <footer class="pt-12 border-t border-white/5 text-center sm:text-left">
-                <p class="text-xs text-zinc-600 tracking-widest uppercase text-center sm:text-left">mcnexus Project &copy; 2026</p>
+            <!-- Overview -->
+            <div class="space-y-16">
+                <section id="intro">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-gh-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Overview
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-5 bg-[#161b22] border border-gh-border rounded-lg">
+                            <h4 class="text-white font-bold mb-2 text-sm">Async-First</h4>
+                            <p class="text-sm text-gh-muted leading-relaxed">Built on top of Python's asyncio for maximum concurrency and efficiency.</p>
+                        </div>
+                        <div class="p-5 bg-[#161b22] border border-gh-border rounded-lg">
+                            <h4 class="text-white font-bold mb-2 text-sm">Protocol Support</h4>
+                            <p class="text-sm text-gh-muted leading-relaxed">Native support for RCON, SLP (Modern & Legacy) and Log Tailing.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="install">
+                    <h2 class="text-2xl font-bold text-white mb-6">📦 Installation</h2>
+                    <pre class="bg-[#010409] p-4"><code class="language-bash">pip install mcnexus</code></pre>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold text-white mb-6">⚡ Quick Start</h2>
+                    <pre class="bg-[#010409] p-4"><code class="language-python">import asyncio
+from mcnexus import status
+
+async def main():
+    info = await status("mc.hypixel.net")
+    print(f"Players: {info.players_online}/{info.players_max}")
+
+asyncio.run(main())</code></pre>
+                </section>
+            </div>
+
+            <footer class="mt-24 pt-8 border-t border-gh-border text-center sm:text-left">
+                <p class="text-xs text-gh-muted tracking-widest uppercase">mcnexus Project &copy; 2026 | Licensed under MIT</p>
             </footer>
         </main>
     </div>
 
+    <script src="sidebar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-
-        btn.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-        });
-    </script>
 </body>
 </html>
