@@ -100,6 +100,12 @@
                     </nav>
                 </section>
                 <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Performance Stats</h3>
+                    <nav class="space-y-1">
+                        <a href="#stats-manager" class="sidebar-link">StatsManager</a>
+                    </nav>
+                </section>
+                <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Models & Data</h3>
                     <nav class="space-y-1">
                         <a href="#rcon-response" class="sidebar-link">RCONResponse</a>
@@ -308,6 +314,46 @@ await ScheduleManager.add_pterodactyl_task(..., sched["id"], action="command", p
 await ScheduleManager.add_pterodactyl_task(..., sched["id"], action="backup", payload="*", time_offset=10)
 # Task C: Restart (runs 60s after backup)
 await ScheduleManager.add_pterodactyl_task(..., sched["id"], action="power", payload="restart", time_offset=60)</code></pre>
+            </section>
+
+            <!-- STATS MANAGER -->
+            <section id="stats-manager" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">StatsManager</h2>
+                </div>
+                <p class="mb-8 text-zinc-400">Retrieve real-time resource usage statistics from your control panels.</p>
+
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono text-sm">async get_server_stats(panel_type, panel_url, api_credentials, server_id) -> ResourceStats</code>
+                    <p class="mt-4 text-sm text-zinc-400">Returns a unified model containing CPU, RAM, and Network usage.</p>
+                    
+                    <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">ResourceStats Model Properties</h4>
+                    <div class="overflow-x-auto mb-8">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-zinc-600 uppercase border-b border-white/5">
+                                <tr><th class="py-3 px-2">Property</th><th class="py-3 px-2">Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="py-3 px-2 font-mono text-brand-400">cpu_usage</td><td class="py-3 px-2 text-zinc-500">CPU usage percentage (e.g. 50.5).</td></tr>
+                                <tr><td class="py-3 px-2 font-mono text-brand-400">memory_mb</td><td class="py-3 px-2 text-zinc-500">Memory usage in Megabytes.</td></tr>
+                                <tr><td class="py-3 px-2 font-mono text-brand-400">network_rx_bytes</td><td class="py-3 px-2 text-zinc-500">Bytes received by the server.</td></tr>
+                                <tr><td class="py-3 px-2 font-mono text-brand-400">state</td><td class="py-3 px-2 text-zinc-500">Current power state (running/off).</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-zinc-500 uppercase mb-4">Example</h4>
+                    <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import StatsManager
+
+stats = await StatsManager.get_server_stats(
+    panel_type="pterodactyl",
+    panel_url="...",
+    api_credentials={"api_key": "..."},
+    server_id="abcdef12"
+)
+print(f"CPU: {stats.cpu_usage}% | RAM: {stats.memory_mb:.2f} MB")</code></pre>
+                </div>
             </section>
 
             <!-- DATA MODELS -->
