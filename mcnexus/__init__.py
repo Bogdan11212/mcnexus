@@ -24,6 +24,7 @@ from mcnexus.logs import (
     AdvancementEvent,
     GenericEvent
 )
+from mcnexus.management import ServerManager
 from mcnexus.pterodactyl import (
     PterodactylClientAPI,
     PterodactylApplicationAPI,
@@ -61,6 +62,7 @@ __all__ = [
     "DeathEvent",
     "AdvancementEvent",
     "GenericEvent",
+    "ServerManager",
     "PterodactylClientAPI",
     "PterodactylApplicationAPI",
     "PterodactylError",
