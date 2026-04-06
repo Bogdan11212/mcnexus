@@ -26,6 +26,7 @@ from mcnexus.logs import (
 )
 from mcnexus.management import ServerManager
 from mcnexus.scheduling import ScheduleManager
+from mcnexus.stats import StatsManager, ResourceStats
 from mcnexus.pterodactyl import (
     PterodactylClientAPI,
     PterodactylApplicationAPI,
@@ -65,6 +66,8 @@ __all__ = [
     "GenericEvent",
     "ServerManager",
     "ScheduleManager",
+    "StatsManager",
+    "ResourceStats",
     "PterodactylClientAPI",
     "PterodactylApplicationAPI",
     "PterodactylError",
