@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/mcnexus/"><img src="https://img.shields.io/pypi/v/mcnexus?color=4CAF50&style=for-the-badge" alt="PyPI version"></a>
-  <a href="https://github.com/Bogdan11212/mcnexus/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Bogdan11212/mcnexus/ci.yml?branch=main&style=for-the-badge" alt="CI Status"></a>
+  <a href="https://github.com/Bogdan11212/mcnexus/actions/workflows/ci.yml"><img src="https://github.com/Bogdan11212/mcnexus/actions/workflows/ci.yml/badge.svg" alt="CI Status"></a>
   <a href="https://github.com/Bogdan11212/mcnexus/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Bogdan11212/mcnexus?color=4CAF50&style=for-the-badge" alt="License"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/pypi/pyversions/mcnexus?color=4CAF50&style=for-the-badge" alt="Python Versions"></a>
 </p>
