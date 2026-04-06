@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Bogdan11212/mcnexus/main/docs/logo.png" alt="mcnexus logo" width="120" />
+  <img src="https://i127.fastpic.org/big/2026/0406/02/ced1b0369b33bd583f822ba82a5c0502.png?md5=gTbekEAYxGucHAWj6uslQQ&expires=1775440800" alt="mcnexus logo" width="180" />
 </p>
 
 <h1 align="center">mcnexus</h1>
