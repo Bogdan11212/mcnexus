@@ -3,122 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mcnexus Docs | Performance Stats</title>
+    <title>Performance Stats | mcnexus Docs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
-                    colors: {
-                        brand: { 500: '#4caf50', 600: '#388e3c' },
-                        dark: '#09090b',
-                        surface: '#121214',
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { gh: { bg: '#0d1117', border: '#30363d', text: '#c9d1d9', muted: '#8b949e', green: '#238636' } }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        pre[class*="language-"] { margin: 0 !important; background: #18181b !important; font-size: 0.875rem !important; }
-        .sidebar-link { @apply block px-3 py-2 text-sm text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all; }
-        .sidebar-link.active { @apply text-brand-500 bg-brand-500/10 font-bold; }
-        .method-block { @apply mb-8 p-6 bg-surface rounded-xl border border-white/5; }
+        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .nav-link { @apply block px-3 py-2 text-sm text-gh-muted hover:text-white hover:bg-white/5 rounded-md transition-all; }
+        .nav-link.active { @apply text-white bg-white/5 font-semibold border-l-2 border-gh-green pl-2.5 rounded-none; }
+        pre { border: 1px solid #30363d !important; border-radius: 6px !important; }
+        .method-block { @apply mb-8 p-6 bg-[#161b22] border border-gh-border rounded-xl; }
     </style>
 </head>
-<body class="bg-dark text-zinc-400">
-    
-    <!-- Top Nav -->
-    <nav class="fixed top-0 z-50 w-full bg-dark/80 backdrop-blur-md border-b border-white/5">
-        <div class="px-4 lg:px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 bg-brand-500 rounded flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <span class="text-lg font-bold text-white tracking-tight">mcnexus <span class="text-zinc-600 font-mono text-xs">v1.0.0</span></span>
-            </div>
-            <div class="flex items-center gap-4 lg:gap-6">
-                <a href="https://pypi.org/project/mcnexus/" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition">PyPI</a>
-                <a href="https://github.com/Bogdan11212/mcnexus" class="text-sm font-medium hover:text-white transition">GitHub</a>
-            </div>
+<body>
+    <header class="fixed top-0 z-50 w-full bg-[#161b22] border-b border-gh-border py-3 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-btn" class="lg:hidden text-gh-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gh-green rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                <span class="text-white font-bold tracking-tight text-lg underline-offset-4 group-hover:underline">mcnexus</span>
+            </a>
         </div>
-    </nav>
+    </header>
 
-    <div class="flex pt-16">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="fixed left-0 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r border-white/5 p-6 bg-dark z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-            <div class="space-y-6">
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Getting Started</h3>
-                    <nav class="space-y-1">
-                        <a href="index.html" class="sidebar-link">Introduction</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Core Modules</h3>
-                    <nav class="space-y-1">
-                        <a href="rcon.html" class="sidebar-link">RCON Protocol</a>
-                        <a href="status.html" class="sidebar-link">Server Status</a>
-                        <a href="logs.html" class="sidebar-link">Log Engine</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Advanced Tools</h3>
-                    <nav class="space-y-1">
-                        <a href="management.html" class="sidebar-link">Power Control</a>
-                        <a href="scheduling.html" class="sidebar-link">Schedules</a>
-                        <a href="stats.html" class="sidebar-link active">Performance Stats</a>
-                        <a href="spark.html" class="sidebar-link">Spark Profiler</a>
-                    </nav>
-                </section>
-                <section>
-                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">API Reference</h3>
-                    <nav class="space-y-1">
-                        <a href="models.html" class="sidebar-link">Models & Errors</a>
-                    </nav>
-                </section>
-            </div>
+    <div class="flex pt-14 min-h-screen">
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden hidden"></div>
+        <aside id="sidebar-container" class="fixed left-0 w-64 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-gh-border bg-[#0d1117] z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 p-6">
+            <div id="sidebar-inject"></div>
         </aside>
 
-        <!-- Content -->
-        <main class="flex-1 lg:ml-64 px-4 lg:px-12 py-12 max-w-5xl">
-            <h1 class="text-4xl font-bold text-white mb-8">Performance Stats</h1>
-            <p class="mb-12 text-lg">Retrieve real-time CPU, Memory, and Network usage from your control panel.</p>
+        <main class="flex-1 lg:ml-64 px-6 lg:px-16 py-12 max-w-5xl overflow-x-hidden">
+            <h1 class="text-3xl font-bold text-white mb-4">Performance Monitoring</h1>
+            <p class="text-gh-muted mb-12 leading-relaxed">Monitor CPU, Memory and Network in real-time.</p>
 
-            <div class="space-y-12">
-                <section>
-                    <h2 class="text-2xl font-bold text-white mb-6">StatsManager</h2>
+            <section class="space-y-12">
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">StatsManager</h2>
                     <div class="method-block">
-                        <code class="text-brand-500 font-bold font-mono">async get_server_stats(...) -> ResourceStats</code>
-                        <p class="mt-2 text-zinc-400">Returns a unified model with CPU usage %, Memory in MB, and Network traffic.</p>
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_server_stats(...) -> ResourceStats</code>
+                        <p class="mt-2 text-sm text-gh-muted">Returns CPU usage, RAM in MB and Network traffic.</p>
                     </div>
-                    <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import StatsManager
+                </div>
+            </section>
 
-stats = await StatsManager.get_server_stats(
-    panel_type="pterodactyl",
-    panel_url="...",
-    api_credentials={"api_key": "..."},
-    server_id="abcdef"
-)
-print(f"CPU Usage: {stats.cpu_usage}%")</code></pre>
-                </section>
-            </div>
-
-            <footer class="pt-12 border-t border-white/5 mt-20">
-                <p class="text-xs text-zinc-600 tracking-widest uppercase text-center sm:text-left">mcnexus Project &copy; 2026</p>
+            <footer class="mt-24 pt-8 border-t border-gh-border text-center sm:text-left">
+                <p class="text-xs text-gh-muted tracking-widest uppercase">mcnexus Project &copy; 2026</p>
             </footer>
         </main>
     </div>
-
+    <script src="sidebar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
