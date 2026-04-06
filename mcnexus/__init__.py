@@ -34,6 +34,14 @@ from mcnexus.pterodactyl import (
     PterodactylServerError,
     PterodactylValidationError
 )
+from mcnexus.pufferpanel import (
+    PufferPanelAPI,
+    PufferPanelError,
+    PufferPanelAuthError,
+    PufferPanelNotFoundError,
+    PufferPanelPermissionError,
+    PufferPanelServerError
+)
 
 __version__ = "0.1.0"
 
@@ -61,6 +69,12 @@ __all__ = [
     "PterodactylRateLimitError",
     "PterodactylServerError",
     "PterodactylValidationError",
+    "PufferPanelAPI",
+    "PufferPanelError",
+    "PufferPanelAuthError",
+    "PufferPanelNotFoundError",
+    "PufferPanelPermissionError",
+    "PufferPanelServerError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
