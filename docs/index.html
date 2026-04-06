@@ -88,6 +88,12 @@
                     </nav>
                 </section>
                 <section>
+                    <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Server Management</h3>
+                    <nav class="space-y-1">
+                        <a href="#server-manager" class="sidebar-link">ServerManager</a>
+                    </nav>
+                </section>
+                <section>
                     <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3 px-3">Models & Data</h3>
                     <nav class="space-y-1">
                         <a href="#rcon-response" class="sidebar-link">RCONResponse</a>
@@ -222,6 +228,43 @@
                 <div class="method-block">
                     <code class="text-brand-500 font-bold font-mono">async start(follow_from_end=True)</code>
                     <p class="mt-2 text-sm">Starts tailing the log file. If <code class="text-zinc-300">True</code>, it ignores previous logs.</p>
+                </div>
+            </section>
+
+            <!-- SERVER MANAGER -->
+            <section id="server-manager" class="mb-24">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
+                    <span class="endpoint-badge">Class</span>
+                    <h2 class="text-3xl font-bold text-white">ServerManager</h2>
+                </div>
+                <p class="mb-8">Universal high-level interface to control servers across different control panels.</p>
+
+                <div class="method-block">
+                    <code class="text-brand-500 font-bold font-mono text-sm">async set_power_state(panel_type, panel_url, api_credentials, server_id, action)</code>
+                    <p class="mt-4 text-sm text-zinc-400">Sets the power state of a server regardless of the panel type.</p>
+                    
+                    <div class="mt-6 space-y-4">
+                        <div class="p-4 bg-zinc-900/50 rounded-lg border border-white/5">
+                            <p class="text-xs font-bold text-zinc-500 uppercase mb-2">Pterodactyl Configuration</p>
+                            <code class="text-xs text-brand-300 italic">api_credentials = {"api_key": "ptlc_..."}</code>
+                        </div>
+                        <div class="p-4 bg-zinc-900/50 rounded-lg border border-white/5">
+                            <p class="text-xs font-bold text-zinc-500 uppercase mb-2">PufferPanel Configuration</p>
+                            <code class="text-xs text-brand-300 italic">api_credentials = {"client_id": "...", "client_secret": "..."}</code>
+                        </div>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">Unified Example</h4>
+                    <pre class="rounded-xl border border-white/5 overflow-hidden"><code class="language-python">from mcnexus import ServerManager
+
+# Works for both panels with one method
+await ServerManager.set_power_state(
+    panel_type="pterodactyl",
+    panel_url="https://panel.myhost.com",
+    api_credentials={"api_key": "your_key"},
+    server_id="abcdef12",
+    action="restart"
+)</code></pre>
                 </div>
             </section>
 
