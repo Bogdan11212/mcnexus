@@ -73,6 +73,11 @@ from mcnexus.skins import (
     InvalidSizeError
 )
 from mcnexus.version import VersionManager
+from mcnexus.validator import (
+    YAMLValidator,
+    YAMLValidationResult,
+    YAMLValidationError
+)
 
 __version__ = "1.1.0"
 
@@ -141,6 +146,9 @@ __all__ = [
     "SkinFetchError",
     "InvalidSizeError",
     "VersionManager",
+    "YAMLValidator",
+    "YAMLValidationResult",
+    "YAMLValidationError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
