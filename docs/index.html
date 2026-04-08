@@ -100,6 +100,23 @@
                     </div>
                 </section>
 
+                <section id="updates">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-gh-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Update Notifications
+                    </h2>
+                    <p class="text-sm text-gh-muted leading-relaxed mb-6">
+                        mcnexus includes an automatic version checker. Upon initialization, the library will asynchronously check for newer versions in the official <code class="text-brand-500">main</code> branch on GitHub.
+                    </p>
+                    <div class="p-5 bg-[#161b22] border border-gh-border rounded-lg border-l-4 border-l-gh-green">
+                        <p class="text-xs text-gh-muted italic mb-2">Notification Example:</p>
+                        <pre class="bg-black/20 border-none p-0 text-[10px] text-green-400 font-mono">
+[mcnexus] A new version is available: 1.2.0 (Current: 1.1.0)
+[mcnexus] New modules and features have been added!
+[mcnexus] Update now using: pip install --upgrade mcnexus</pre>
+                    </div>
+                </section>
+
                 <section id="install">
                     <h2 class="text-2xl font-bold text-white mb-6">📦 Installation</h2>
                     <pre class="bg-[#010409] p-4"><code class="language-bash">pip install mcnexus</code></pre>
