@@ -28,6 +28,7 @@ const sidebarContent = `
         <h3 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-3">Advanced</h3>
         <nav class="space-y-1">
             <a href="spark.html" class="nav-link" data-page="spark">Spark Profiler</a>
+            <a href="validator.html" class="nav-link" data-page="validator">YAML Validator</a>
         </nav>
     </section>
     <section>
