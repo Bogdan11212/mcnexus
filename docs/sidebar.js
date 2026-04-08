@@ -29,6 +29,7 @@ const sidebarContent = `
         <nav class="space-y-1">
             <a href="spark.html" class="nav-link" data-page="spark">Spark Profiler</a>
             <a href="validator.html" class="nav-link" data-page="validator">YAML Validator</a>
+            <a href="database.html" class="nav-link" data-page="database">Database Migration</a>
         </nav>
     </section>
     <section>
