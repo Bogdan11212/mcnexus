@@ -30,6 +30,12 @@ const sidebarContent = `
         </nav>
     </section>
     <section>
+        <h3 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-3">Player Intelligence</h3>
+        <nav class="space-y-1">
+            <a href="players.html" class="nav-link" data-page="players">Stats & Profiles</a>
+        </nav>
+    </section>
+    <section>
         <h3 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-3">Reference</h3>
         <nav class="space-y-1">
             <a href="models.html" class="nav-link" data-page="models">Models & Errors</a>
