@@ -56,6 +56,16 @@ from mcnexus.spark import (
     SparkParseError,
     SparkInvalidURLError
 )
+from mcnexus.players import (
+    PlayerIntelligence,
+    MojangAPI,
+    HypixelAPI,
+    WynncraftAPI,
+    PlayerError,
+    PlayerNotFoundError,
+    PlayerAPIError,
+    PlayerRateLimitError
+)
 
 __version__ = "1.1.0"
 
@@ -102,6 +112,14 @@ __all__ = [
     "SparkFetchError",
     "SparkParseError",
     "SparkInvalidURLError",
+    "PlayerIntelligence",
+    "MojangAPI",
+    "HypixelAPI",
+    "WynncraftAPI",
+    "PlayerError",
+    "PlayerNotFoundError",
+    "PlayerAPIError",
+    "PlayerRateLimitError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
