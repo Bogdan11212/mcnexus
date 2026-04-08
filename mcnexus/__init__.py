@@ -72,8 +72,18 @@ from mcnexus.skins import (
     SkinFetchError,
     InvalidSizeError
 )
+from mcnexus.version import VersionManager
 
 __version__ = "1.1.0"
+
+# Automatic background check for updates
+import asyncio
+try:
+    loop = asyncio.get_event_loop()
+    if loop.is_running():
+        loop.create_task(VersionManager.check_for_updates())
+except Exception:
+    pass
 
 __all__ = [
     "RCONClient",
@@ -130,6 +140,7 @@ __all__ = [
     "SkinError",
     "SkinFetchError",
     "InvalidSizeError",
+    "VersionManager",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
