@@ -78,6 +78,13 @@ from mcnexus.validator import (
     YAMLValidationResult,
     YAMLValidationError
 )
+from mcnexus.database import (
+    SQLiteMigrator,
+    MigrationError,
+    DatabaseConnectionError,
+    MigrationDataError,
+    MigrationUnsupportedError
+)
 
 __version__ = "1.1.0"
 
@@ -149,6 +156,11 @@ __all__ = [
     "YAMLValidator",
     "YAMLValidationResult",
     "YAMLValidationError",
+    "SQLiteMigrator",
+    "MigrationError",
+    "DatabaseConnectionError",
+    "MigrationDataError",
+    "MigrationUnsupportedError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
