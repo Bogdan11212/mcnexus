@@ -66,6 +66,12 @@ from mcnexus.players import (
     PlayerAPIError,
     PlayerRateLimitError
 )
+from mcnexus.skins import (
+    SkinsAPI,
+    SkinError,
+    SkinFetchError,
+    InvalidSizeError
+)
 
 __version__ = "1.1.0"
 
@@ -120,6 +126,10 @@ __all__ = [
     "PlayerNotFoundError",
     "PlayerAPIError",
     "PlayerRateLimitError",
+    "SkinsAPI",
+    "SkinError",
+    "SkinFetchError",
+    "InvalidSizeError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
