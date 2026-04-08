@@ -5,6 +5,7 @@ const sidebarContent = `
         <nav class="space-y-1">
             <a href="index.html" class="nav-link" data-page="index">Introduction</a>
             <a href="index.html#install" class="nav-link" data-page="install">Installation</a>
+            <a href="index.html#updates" class="nav-link" data-page="updates">Update Checker</a>
         </nav>
     </section>
     <section>
