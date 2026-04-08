@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAML Validator | mcnexus Docs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { gh: { bg: '#0d1117', border: '#30363d', text: '#c9d1d9', muted: '#8b949e', green: '#238636' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .nav-link { @apply block px-3 py-2 text-sm text-gh-muted hover:text-white hover:bg-white/5 rounded-md transition-all; }
+        .nav-link.active { @apply text-white bg-white/5 font-semibold border-l-2 border-gh-green pl-2.5 rounded-none; }
+        pre { border: 1px solid #30363d !important; border-radius: 6px !important; }
+        .method-block { @apply mb-8 p-6 bg-[#161b22] border border-gh-border rounded-xl; }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 z-50 w-full bg-[#161b22] border-b border-gh-border py-3 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-btn" class="lg:hidden text-gh-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gh-green rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                <span class="text-white font-bold tracking-tight text-lg underline-offset-4 group-hover:underline">mcnexus</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden hidden"></div>
+        <aside id="sidebar-container" class="fixed left-0 w-64 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-gh-border bg-[#0d1117] z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 p-6">
+            <div id="sidebar-inject"></div>
+        </aside>
+
+        <main class="flex-1 lg:ml-64 px-6 lg:px-16 py-12 max-w-5xl overflow-x-hidden">
+            <h1 class="text-3xl font-bold text-white mb-4">Configuration Validator</h1>
+            <p class="text-gh-muted mb-12 leading-relaxed">Ensure your YAML files are correct before deploying them to the server.</p>
+
+            <section class="space-y-16">
+                <!-- YAMLValidator -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">YAMLValidator</h2>
+                    <p class="mb-6 text-sm text-gh-muted leading-relaxed">Detect syntax errors, missing keys, and malformed structures with precise line and column reporting.</p>
+                    
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">validate_file(path) / async validate_file_async(path)</code>
+                        <p class="mt-2 text-sm text-gh-muted">Validate a local YAML file and get a detailed result object.</p>
+                    </div>
+
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">validate_string(content)</code>
+                        <p class="mt-2 text-sm text-gh-muted">Validate a YAML string directly.</p>
+                    </div>
+
+                    <pre class="bg-[#010409] p-4"><code class="language-python">from mcnexus import YAMLValidator
+
+result = YAMLValidator.validate_file("config.yml")
+
+if not result.is_valid:
+    print(f"Error: {result.error.message}")
+    print(f"Line: {result.error.line}, Column: {result.error.column}")
+    print(f"Context:\n{result.error.snippet}")</code></pre>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">Validation Models</h2>
+                    <p class="mb-4 text-sm text-gh-muted leading-relaxed">The <code class="text-brand-500">YAMLValidationResult</code> provides a structured overview of the check.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-gh-muted uppercase border-b border-gh-border">
+                                <tr><th class="py-3 px-2">Field</th><th class="py-3 px-2">Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gh-border/5">
+                                    <td class="py-3 px-2 font-mono text-gh-green">is_valid</td>
+                                    <td class="py-3 px-2">Boolean indicating if the YAML is syntactically correct.</td>
+                                </tr>
+                                <tr class="border-b border-gh-border/5">
+                                    <td class="py-3 px-2 font-mono text-gh-green">error</td>
+                                    <td class="py-3 px-2">A <code class="text-white">YAMLValidationError</code> object if <code class="text-white">is_valid</code> is False.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="mt-24 pt-8 border-t border-gh-border text-center sm:text-left">
+                <p class="text-xs text-gh-muted tracking-widest uppercase">mcnexus Project &copy; 2026</p>
+            </footer>
+        </main>
+    </div>
+    <script src="sidebar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
