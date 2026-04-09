@@ -5,6 +5,7 @@ from mcnexus.agerapvp.exceptions import AgeraAuthError, AgeraNotFoundError, Ager
 class AgeraPVPAPI:
     """
     Asynchronous client for the AgeraPVP API.
+    Provides 100% coverage of the Public API endpoints.
     """
     def __init__(self, api_key: Optional[str] = None, session: Optional[aiohttp.ClientSession] = None):
         self.api_key = api_key
@@ -23,25 +24,92 @@ class AgeraPVPAPI:
             self._owns_session = True
         return self._session
 
-    async def _request(self, method: str, url: str, **kwargs) -> Any:
-        async with self.session.request(method, url, **kwargs) as resp:
+    async def _request(self, method: str, path: str, params: Optional[Dict] = None) -> Any:
+        url = f"{self.api_base}{path}"
+        async with self.session.request(method, url, params=params) as resp:
             if resp.status == 401 or resp.status == 403:
                 raise AgeraAuthError("Invalid or missing API key.")
             if resp.status == 404:
-                raise AgeraNotFoundError("The requested player or resource was not found.")
+                raise AgeraNotFoundError(f"Resource not found: {path}")
             if resp.status != 200:
-                raise AgeraAPIError(f"AgeraPVP API error: {resp.status}")
+                data = await resp.json()
+                raise AgeraAPIError(f"AgeraPVP API error: {data.get('detail', resp.status)}")
             
             return await resp.json()
 
-    # --- Player Data ---
-    async def get_profile(self, name_or_uuid: str) -> Dict[str, Any]:
-        """Returns the general profile data for a player."""
-        return await self._request("GET", f"{self.api_base}/player/profile/{name_or_uuid}")
+    # --- Test ---
+    async def test_connection(self) -> bool:
+        """Checks if the API key and connection are working."""
+        data = await self._request("GET", "/test")
+        return data.get("success", False)
 
-    async def get_stats(self, name_or_uuid: str) -> Dict[str, Any]:
-        """Returns detailed game statistics for a player."""
-        return await self._request("GET", f"{self.api_base}/player/stats/{name_or_uuid}")
+    # --- Player API ---
+    async def get_profile(self, name: str) -> Dict[str, Any]:
+        """Returns the player profile (ranks, skin, server, last login)."""
+        return await self._request("GET", f"/player/profile/{name}")
+
+    async def get_stats(self, name: str, mode: str) -> Dict[str, Any]:
+        """Returns player statistics for a specific mode (e.g. BW, DUELS)."""
+        return await self._request("GET", f"/player/stats/{name}/{mode}")
+
+    async def get_friends(self, name: str) -> List[Dict[str, Any]]:
+        """Returns the list of player friends profiles."""
+        data = await self._request("GET", f"/player/friends/{name}")
+        return data.get("profiles", [])
+
+    # --- Staff API ---
+    async def get_staff_stats(self) -> Dict[str, Any]:
+        """Returns various staff statistics (total bans, mutes, active ones)."""
+        return await self._request("GET", "/staff/stats")
+
+    async def get_online_staff(self) -> List[Dict[str, Any]]:
+        """Returns a list of currently online staff members."""
+        data = await self._request("GET", "/staff/online")
+        return data.get("players", [])
+
+    # --- Server API ---
+    async def get_running_servers(self, mode: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Returns a list of all running servers, optionally filtered by mode."""
+        path = "/server/running"
+        if mode:
+            path += f"/{mode}"
+        data = await self._request("GET", path)
+        return data.get("servers", [])
+
+    async def get_mode_online(self, mode: str) -> int:
+        """Returns the number of players currently in a specific mode."""
+        data = await self._request("GET", f"/server/online/by-mode/{mode}")
+        return data.get("online", 0)
+
+    async def get_available_modes(self) -> Dict[str, List[str]]:
+        """Returns a list of all available game modes (master and mini)."""
+        return await self._request("GET", "/server/modes/available")
+
+    async def get_mode_maps(self, mode: str) -> List[str]:
+        """Returns a list of maps available for the specified mode."""
+        data = await self._request("GET", f"/server/maps/by-mode/{mode}")
+        return data.get("maps", [])
+
+    # --- Core API ---
+    async def get_total_online(self) -> int:
+        """Returns the current total online player count on the network."""
+        data = await self._request("GET", "/core/online/total")
+        return data.get("online", 0)
+
+    async def get_uptime(self) -> int:
+        """Returns the current server uptime in seconds."""
+        data = await self._request("GET", "/core/uptime")
+        return data.get("uptime", 0)
+
+    async def get_streams(self) -> List[Dict[str, Any]]:
+        """Returns a list of currently running streams (streamer, url, platform)."""
+        data = await self._request("GET", "/core/streams")
+        return data.get("streams", [])
+
+    async def get_leaderboard(self, mode: str, field: str) -> Dict[str, int]:
+        """Returns top players based on a specific stats field and mode."""
+        data = await self._request("GET", f"/core/top/{mode}/{field}")
+        return data.get("top", {})
 
     # --- Skin Service (Static URL Generators) ---
     def get_head_url(self, username: str) -> str:
