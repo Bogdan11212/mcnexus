@@ -85,6 +85,13 @@ from mcnexus.database import (
     MigrationDataError,
     MigrationUnsupportedError
 )
+from mcnexus.agerapvp import (
+    AgeraPVPAPI,
+    AgeraError,
+    AgeraAuthError,
+    AgeraNotFoundError,
+    AgeraAPIError
+)
 
 __version__ = "1.3.0"
 
@@ -161,6 +168,11 @@ __all__ = [
     "DatabaseConnectionError",
     "MigrationDataError",
     "MigrationUnsupportedError",
+    "AgeraPVPAPI",
+    "AgeraError",
+    "AgeraAuthError",
+    "AgeraNotFoundError",
+    "AgeraAPIError",
     "strip_colors",
     "RCONError",
     "RCONAuthError",
