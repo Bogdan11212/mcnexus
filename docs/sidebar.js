@@ -30,6 +30,7 @@ const sidebarContent = `
             <a href="spark.html" class="nav-link" data-page="spark">Spark Profiler</a>
             <a href="validator.html" class="nav-link" data-page="validator">YAML Validator</a>
             <a href="database.html" class="nav-link" data-page="database">Database Migration</a>
+            <a href="agerapvp.html" class="nav-link" data-page="agerapvp">AgeraPVP API</a>
         </nav>
     </section>
     <section>
