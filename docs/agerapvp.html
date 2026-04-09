@@ -47,52 +47,74 @@
 
         <main class="flex-1 lg:ml-64 px-6 lg:px-16 py-12 max-w-5xl overflow-x-hidden text-sm">
             <h1 class="text-3xl font-bold text-white mb-4">AgeraPVP API</h1>
-            <p class="text-gh-muted mb-12 leading-relaxed">Full integration with the AgeraPVP server API. Track player stats, profiles, and render high-quality visuals using their dedicated skin service.</p>
+            <p class="text-gh-muted mb-12 leading-relaxed">Complete asynchronous implementation of the AgeraPVP Public API. Access everything from player stats to global leaderboards and staff monitoring.</p>
 
             <section class="space-y-16">
-                <!-- AgeraPVPAPI -->
+                <!-- Player API -->
                 <div>
-                    <h2 class="text-xl font-bold text-white mb-6">AgeraPVPAPI</h2>
+                    <h2 class="text-xl font-bold text-white mb-6 border-b border-gh-border pb-2">Player API</h2>
                     
                     <div class="method-block">
-                        <code class="text-gh-green font-bold font-mono text-xs">async get_profile(name_or_uuid) -> Dict</code>
-                        <p class="mt-2 text-sm text-gh-muted">Fetch general profile information including rank and group.</p>
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_profile(name) / async get_stats(name, mode)</code>
+                        <p class="mt-2 text-sm text-gh-muted">Fetch general profile data or specific mode statistics (BW, DUELS, SKYWARS, etc.).</p>
                     </div>
 
                     <div class="method-block">
-                        <code class="text-gh-green font-bold font-mono text-xs">async get_stats(name_or_uuid) -> Dict</code>
-                        <p class="mt-2 text-sm text-gh-muted">Access detailed game statistics (BedWars, Duels, etc.).</p>
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_friends(name) -> List[Dict]</code>
+                        <p class="mt-2 text-sm text-gh-muted">Retrieve the full list of a player's friends profiles.</p>
                     </div>
-
-                    <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">API Usage Example</h4>
-                    <pre class="bg-[#010409] p-4"><code class="language-python">from mcnexus import AgeraPVPAPI
-
-async def show_stats():
-    # API Key is optional for some public endpoints
-    async with AgeraPVPAPI() as agera:
-        profile = await agera.get_profile("PlayerName")
-        stats = await agera.get_stats("PlayerName")
-        print(f"Stats: {stats}")
-
-import asyncio
-asyncio.run(show_stats())</code></pre>
                 </div>
 
-                <!-- Skin Service -->
+                <!-- Server & Core API -->
                 <div>
-                    <h2 class="text-xl font-bold text-white mb-6">Skin Service</h2>
-                    <p class="mb-6 text-sm text-gh-muted leading-relaxed">AgeraPVP provides a dedicated service for rendering player avatars and textures.</p>
+                    <h2 class="text-xl font-bold text-white mb-6 border-b border-gh-border pb-2">Server & Core Monitoring</h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 bg-[#161b22] border border-gh-border rounded-lg">
-                            <code class="text-gh-green font-bold font-mono text-xs block mb-2">get_head_url(username)</code>
-                            <p class="text-xs text-gh-muted italic">https://skin.agerapvp.club/v1/head/...</p>
-                        </div>
-                        <div class="p-4 bg-[#161b22] border border-gh-border rounded-lg">
-                            <code class="text-gh-green font-bold font-mono text-xs block mb-2">get_body_url(username)</code>
-                            <p class="text-xs text-gh-muted italic">https://skin.agerapvp.club/v1/body/...</p>
-                        </div>
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_total_online() / async get_uptime()</code>
+                        <p class="mt-2 text-sm text-gh-muted">Monitor the project's health and total player count.</p>
                     </div>
+
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_leaderboard(mode, field) -> Dict[str, int]</code>
+                        <p class="mt-2 text-sm text-gh-muted">Generate a leaderboard for any mode and field (e.g., BW, wins). Note: Takes 1-5s to generate.</p>
+                    </div>
+
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_streams() -> List[Dict]</code>
+                        <p class="mt-2 text-sm text-gh-muted">Get a live list of running streams from AgeraPVP content creators.</p>
+                    </div>
+                </div>
+
+                <!-- Staff API -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6 border-b border-gh-border pb-2">Staff & Security</h2>
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_staff_stats() / async get_online_staff()</code>
+                        <p class="mt-2 text-sm text-gh-muted">Access moderation statistics (bans/mutes) and see which staff members are currently online.</p>
+                    </div>
+                </div>
+
+                <!-- Full Example -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">Comprehensive Example</h2>
+                    <pre class="bg-[#010409] p-4"><code class="language-python">from mcnexus import AgeraPVPAPI
+import asyncio
+
+async def main():
+    async with AgeraPVPAPI(api_key="YOUR_KEY") as agera:
+        # Check overall online
+        online = await agera.get_total_online()
+        print(f"Total Players: {online}")
+
+        # Get top 10 BedWars winners
+        top = await agera.get_leaderboard("BW", "wins")
+        print(f"Top Winners: {top}")
+
+        # Check online staff
+        staff = await agera.get_online_staff()
+        print(f"Online Moderators: {[s['displayName'] for s in staff]}")
+
+asyncio.run(main())</code></pre>
                 </div>
             </section>
 
