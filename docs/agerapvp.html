@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgeraPVP API | mcnexus Docs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { gh: { bg: '#0d1117', border: '#30363d', text: '#c9d1d9', muted: '#8b949e', green: '#238636' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .nav-link { @apply block px-3 py-2 text-sm text-gh-muted hover:text-white hover:bg-white/5 rounded-md transition-all; }
+        .nav-link.active { @apply text-white bg-white/5 font-semibold border-l-2 border-gh-green pl-2.5 rounded-none; }
+        pre { border: 1px solid #30363d !important; border-radius: 6px !important; }
+        .method-block { @apply mb-8 p-6 bg-[#161b22] border border-gh-border rounded-xl; }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 z-50 w-full bg-[#161b22] border-b border-gh-border py-3 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-btn" class="lg:hidden text-gh-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gh-green rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                <span class="text-white font-bold tracking-tight text-lg underline-offset-4 group-hover:underline">mcnexus</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden hidden"></div>
+        <aside id="sidebar-container" class="fixed left-0 w-64 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-gh-border bg-[#0d1117] z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 p-6">
+            <div id="sidebar-inject"></div>
+        </aside>
+
+        <main class="flex-1 lg:ml-64 px-6 lg:px-16 py-12 max-w-5xl overflow-x-hidden text-sm">
+            <h1 class="text-3xl font-bold text-white mb-4">AgeraPVP API</h1>
+            <p class="text-gh-muted mb-12 leading-relaxed">Full integration with the AgeraPVP server API. Track player stats, profiles, and render high-quality visuals using their dedicated skin service.</p>
+
+            <section class="space-y-16">
+                <!-- AgeraPVPAPI -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">AgeraPVPAPI</h2>
+                    
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_profile(name_or_uuid) -> Dict</code>
+                        <p class="mt-2 text-sm text-gh-muted">Fetch general profile information including rank and group.</p>
+                    </div>
+
+                    <div class="method-block">
+                        <code class="text-gh-green font-bold font-mono text-xs">async get_stats(name_or_uuid) -> Dict</code>
+                        <p class="mt-2 text-sm text-gh-muted">Access detailed game statistics (BedWars, Duels, etc.).</p>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-zinc-500 uppercase mt-8 mb-4">API Usage Example</h4>
+                    <pre class="bg-[#010409] p-4"><code class="language-python">from mcnexus import AgeraPVPAPI
+
+async def show_stats():
+    # API Key is optional for some public endpoints
+    async with AgeraPVPAPI() as agera:
+        profile = await agera.get_profile("PlayerName")
+        stats = await agera.get_stats("PlayerName")
+        print(f"Stats: {stats}")
+
+import asyncio
+asyncio.run(show_stats())</code></pre>
+                </div>
+
+                <!-- Skin Service -->
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-6">Skin Service</h2>
+                    <p class="mb-6 text-sm text-gh-muted leading-relaxed">AgeraPVP provides a dedicated service for rendering player avatars and textures.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-[#161b22] border border-gh-border rounded-lg">
+                            <code class="text-gh-green font-bold font-mono text-xs block mb-2">get_head_url(username)</code>
+                            <p class="text-xs text-gh-muted italic">https://skin.agerapvp.club/v1/head/...</p>
+                        </div>
+                        <div class="p-4 bg-[#161b22] border border-gh-border rounded-lg">
+                            <code class="text-gh-green font-bold font-mono text-xs block mb-2">get_body_url(username)</code>
+                            <p class="text-xs text-gh-muted italic">https://skin.agerapvp.club/v1/body/...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="mt-24 pt-8 border-t border-gh-border text-center sm:text-left">
+                <p class="text-xs text-gh-muted tracking-widest uppercase">mcnexus Project &copy; 2026</p>
+            </footer>
+        </main>
+    </div>
+    <script src="sidebar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
